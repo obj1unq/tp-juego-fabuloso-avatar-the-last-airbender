@@ -1,0 +1,34 @@
+import wollok.game.*
+import characters.*
+import movements.*
+
+program avatarGame {
+
+	////////////////
+	// S E T  U P //
+	////////////////
+	
+	game.title("Avatar, the last airbender")
+	game.width(12)
+	game.height(12)
+	
+	///////////////////
+	// V I S U A L S //
+	///////////////////
+	game.addVisual(aang)
+	
+	
+	/////////////////////
+	// K E Y B O A R D //
+	/////////////////////
+	keyboard.up().onPressDo({aang.mover(arriba)})
+	keyboard.down().onPressDo({aang.mover(abajo)})	
+	keyboard.right().onPressDo({aang.mover(derecha)})	
+	keyboard.left().onPressDo({aang.mover(izquierda)})	
+	
+	///////////////
+    // S T A R T //
+    ///////////////
+    
+	game.start()
+}
