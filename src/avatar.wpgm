@@ -1,6 +1,7 @@
 import wollok.game.*
 import characters.*
 import movements.*
+import elementosYBarra.*
 
 program avatarGame {
 
@@ -16,7 +17,9 @@ program avatarGame {
 	// V I S U A L S //
 	///////////////////
 	game.addVisual(aang)
-	
+	//BARRAS Y ELEMENTOS//
+	game.addVisual(aire)
+	game.addVisual(barraMana)
 	
 	/////////////////////
 	// K E Y B O A R D //
@@ -25,7 +28,17 @@ program avatarGame {
 	keyboard.down().onPressDo({aang.mover(abajo)})	
 	keyboard.right().onPressDo({aang.mover(derecha)})	
 	keyboard.left().onPressDo({aang.mover(izquierda)})	
-	
+	////////////////////
+	//  E V E N T OS  //
+	///////////////////
+	game.onTick(3*1000, "regeneracionMana",{ aang.aumentarEnergia()})
+	////////////////////
+	//ELEMENTOS PRUEBA//
+	///////////////////
+	keyboard.a().onPressDo {agua.aprendioADominarElAgua() }
+	keyboard.t().onPressDo {tierra.aprendioADominarLaTierra()}
+	keyboard.f().onPressDo {fuego.aprendioADominarElFuego()}
+	keyboard.e().onPressDo {aang.perderEnergia()}
 	///////////////
     // S T A R T //
     ///////////////
