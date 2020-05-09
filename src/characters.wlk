@@ -3,7 +3,8 @@ import movements.*
 import elementosYBarra.*
 
 object aang{
-	var property energia = 5
+	var property vida = 6
+	var property energia = 7
 	var property position = game.at(1,1)
 	var property image = "aang__movement/toBottom/stopped--1.png"
 	
@@ -13,14 +14,26 @@ object aang{
 		self.image(direccion.image())
 	}
 	method perderEnergia(){
-		if (energia>0) {
+		if (self.energia() > 0) {
 		energia -= 1
 		barraMana.descontarBarra()}
 	}
 	method aumentarEnergia(){
-		if (energia<5){
+		if (self.energia() < 7){
 		energia += 1
 		barraMana.aumentarBarra()}
+	}
+	method perderVida(){
+		if(self.vida() > 0){
+			vida -= 1
+			barraVida.descontarBarra()
+		}else {game.stop()}
+	}
+	method aumentarVida(){
+		if(self.vida() < 6){
+			vida += 1
+			barraVida.aumentarBarra()
+		}
 	}
 }
 

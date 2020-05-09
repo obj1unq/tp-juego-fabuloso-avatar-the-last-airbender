@@ -9,8 +9,8 @@ object aire {
 
 
 object agua {
-	method image() = "barras_elementos/aguita.png"
-	method position()  {return game.at(1,10)} 
+	method image() = "barras_elementos/agua.png"
+	method position()  {return game.at(2,10)} 
 	method aprendioADominarElAgua(){
 		game.addVisual(self)
 	}
@@ -18,29 +18,32 @@ object agua {
 }
 object tierra {
 	method image() = "barras_elementos/tierra.png"
-	method position()  {return game.at(1,10)} 
+	method position()  {return game.at(3,10)} 
 	method aprendioADominarLaTierra(){
 		game.addVisual(self)
 	}
 
 }
 object fuego {
-	method image() = "barras_elementos/fueguito.png"
-	method position()  {return game.at(1,10)} 
+	method image() = "barras_elementos/fuego.png"
+	method position()  {return game.at(4,10)} 
 	method aprendioADominarElFuego(){
 		game.addVisual(self)
 	}
 //BARRAS MANA Y VIDA
 }
 object barraMana{
-	var property barraEnergia = 5
+	var property barraEnergia = 7
 	method position() {return game.at(1,8)}
-	method image() = "barraMana/"+self.barraEnergia()+".png"
+	method image() = "barraMana/"+ barraEnergia.toString()+".png"
+	method descontarBarra(){barraEnergia -= 1}
+	method aumentarBarra(){barraEnergia += 1}
+}
+object barraVida{
+	var property barraVida = 6
+	method position(){return game.at(1,8)}
+	method image()="vida/"+ barraVida.toString()+".png"
+	method descontarBarra(){barraVida -=1}
+	method aumentarBarra(){barraVida += 1}
 	
-	method descontarBarra(){
-		if(barraEnergia >0) barraEnergia -= 1
-	}
-	method aumentarBarra(){
-		if (barraEnergia< 5) barraEnergia += 1
-	}
 }
