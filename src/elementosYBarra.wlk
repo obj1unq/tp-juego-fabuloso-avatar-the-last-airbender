@@ -55,7 +55,7 @@ object barraVida{
 /////////////////////////////
 //////S C O R E//////////////
 ////////////////////////////
-/*object score{
-	var property score = 000
+object score unidad{
+	var property score = 0
 	method position(){return game.at()}
-}*/
+}
