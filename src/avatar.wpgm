@@ -9,8 +9,9 @@ program avatarGame {
 	////////////////
 	
 	game.title("Avatar, the last airbender")
-	game.width(12)
-	game.height(12)
+	game.width(20)
+	game.height(10)
+	game.boardGround("stage/mapa2.jpg")
 	
 	///////////////////
 	// V I S U A L S //
