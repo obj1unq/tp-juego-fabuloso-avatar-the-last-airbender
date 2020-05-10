@@ -34,14 +34,14 @@ object fuego {
 }
 object barraMana{
 	var property barraEnergia = 7
-	method position() {return game.at(1,8)}
+	method position() {return game.at(1,12)}
 	method image() = "barraMana/"+ barraEnergia.toString()+".png"
 	method descontarBarra(){barraEnergia -= 1}
 	method aumentarBarra(){barraEnergia += 1}
 }
 object barraVida{
 	var property barraVida = 6
-	method position(){return game.at(1,8)}
+	method position(){return game.at(1,12)}
 	method image()="vida/"+ barraVida.toString()+".png"
 	method descontarBarra(){barraVida -=1}
 	method aumentarBarra(){barraVida += 1}

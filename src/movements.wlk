@@ -1,3 +1,4 @@
+import wollok.game.*
 import characters.*
 
 object arriba{
@@ -39,4 +40,33 @@ object izquierda{
 		animacion++
 		if(animacion>4){animacion=1}
 	}
+}
+object hitIzquierda{
+	var property animacion = 1
+	const property energiaAPerder = 0.16
+	method image(){return "fight/toLeft/" + animacion.toString() + ".png" }
+	method avanzarAnimacion(n){
+		if(animacion < 6){
+		animacion = animacion + n
+		aang.image(self.image())
+		}else {game.removeTickEvent("golpe")
+				animacion = 1
+		}
+		
+	}
+}
+object hitDerecha{
+	var property animacion = 1
+	const property energiaAPerder = 0.16
+	method image(){return "fight/toRight/" + animacion.toString() + ".png" }
+	method avanzarAnimacion(n){
+		if(animacion < 6){
+		animacion = animacion + n
+		aang.image(self.image())
+		}else {game.removeTickEvent("golpe")
+				animacion = 1
+		}
+		
+	}
+}
 }

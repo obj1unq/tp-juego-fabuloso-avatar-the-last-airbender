@@ -7,8 +7,10 @@ object aang{
 	var property energia = 7
 	var property position = game.at(1,1)
 	var property image = "aang__movement/toBottom/stopped--1.png"
+	var property direccionActual = derecha 
 	
 	method mover(direccion){
+		direccionActual = direccion
 		self.position(direccion.position())
 		direccion.avanzarAnimacion(1)
 		self.image(direccion.image())
@@ -34,6 +36,12 @@ object aang{
 			vida += 1
 			barraVida.aumentarBarra()
 		}
+	}
+	method figth(tipoDePelea){
+		energia = energia - tipoDePelea.energiaAPerder().truncate(0)
+		
+		game.onTick(500,"golpe",{tipoDePelea.avanzarAnimacion(1)})
+		
 	}
 }
 
