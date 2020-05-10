@@ -43,12 +43,13 @@ object izquierda{
 }
 object hitIzquierda{
 	var property animacion = 1
-	const property energiaAPerder = 0.16
+	const property energiaAPerder = 1
 	method image(){return "fight/toLeft/" + animacion.toString() + ".png" }
 	method avanzarAnimacion(n){
 		if(animacion < 6){
 		animacion = animacion + n
 		aang.image(self.image())
+		
 		}else {game.removeTickEvent("golpe")
 				animacion = 1
 		}
@@ -57,7 +58,7 @@ object hitIzquierda{
 }
 object hitDerecha{
 	var property animacion = 1
-	const property energiaAPerder = 0.16
+	const property energiaAPerder = 1
 	method image(){return "fight/toRight/" + animacion.toString() + ".png" }
 	method avanzarAnimacion(n){
 		if(animacion < 6){
@@ -66,7 +67,5 @@ object hitDerecha{
 		}else {game.removeTickEvent("golpe")
 				animacion = 1
 		}
-		
 	}
-}
 }

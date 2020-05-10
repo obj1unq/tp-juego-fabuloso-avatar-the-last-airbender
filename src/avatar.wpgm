@@ -23,7 +23,7 @@ program avatarGame {
 	game.addVisual(aire)
 	game.addVisual(barraVida)
 	game.addVisual(barraMana)
-	//game.boardGround("fondo.jpg")
+	//game.addVisual(score)
 	/////////////////////
 	// K E Y B O A R D //
 	/////////////////////
@@ -44,8 +44,7 @@ program avatarGame {
 	keyboard.a().onPressDo {agua.aprendioADominarElAgua() }
 	keyboard.t().onPressDo {tierra.aprendioADominarLaTierra()}
 	keyboard.f().onPressDo {fuego.aprendioADominarElFuego()}
-	keyboard.e().onPressDo {aang.perderEnergia()}
-	keyboard.v().onPressDo {aang.perderVida()}
+	//keyboard.v().onPressDo {aang.perderVida()}
 	///////////////
     // S T A R T //
     ///////////////

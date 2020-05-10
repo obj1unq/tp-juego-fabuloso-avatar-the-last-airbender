@@ -1,6 +1,8 @@
 import wollok.game.*
 import characters.*
-
+////////////////////////////////////
+///////////ELEMENTOS////////////////
+///////////////////////////////////
 object aire {
 	method image() = "barras_elementos/aire.png"
 	method position()  {return game.at(1,10)} 
@@ -30,13 +32,16 @@ object fuego {
 	method aprendioADominarElFuego(){
 		game.addVisual(self)
 	}
-//BARRAS MANA Y VIDA
 }
+//////////////////////////////	
+//////BARRAS MANA Y VIDA//////
+//////////////////////////////
+
 object barraMana{
 	var property barraEnergia = 7
 	method position() {return game.at(1,12)}
 	method image() = "barraMana/"+ barraEnergia.toString()+".png"
-	method descontarBarra(){barraEnergia -= 1}
+	method descontarBarra(energiaAPerder){barraEnergia -= energiaAPerder}
 	method aumentarBarra(){barraEnergia += 1}
 }
 object barraVida{
@@ -47,3 +52,10 @@ object barraVida{
 	method aumentarBarra(){barraVida += 1}
 	
 }
+/////////////////////////////
+//////S C O R E//////////////
+////////////////////////////
+/*object score{
+	var property score = 000
+	method position(){return game.at()}
+}*/

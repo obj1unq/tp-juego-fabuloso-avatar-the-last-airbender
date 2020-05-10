@@ -15,10 +15,10 @@ object aang{
 		direccion.avanzarAnimacion(1)
 		self.image(direccion.image())
 	}
-	method perderEnergia(){
+	method perderEnergia(energiaAPerder){
 		if (self.energia() > 0) {
-		energia -= 1
-		barraMana.descontarBarra()}
+		energia -= energiaAPerder
+		barraMana.descontarBarra(energiaAPerder)}
 	}
 	method aumentarEnergia(){
 		if (self.energia() < 7){
@@ -38,8 +38,7 @@ object aang{
 		}
 	}
 	method figth(tipoDePelea){
-		energia = energia - tipoDePelea.energiaAPerder().truncate(0)
-		
+		self.perderEnergia(tipoDePelea.energiaAPerder())
 		game.onTick(500,"golpe",{tipoDePelea.avanzarAnimacion(1)})
 		
 	}
