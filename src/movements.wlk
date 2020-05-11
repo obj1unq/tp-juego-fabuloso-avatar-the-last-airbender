@@ -33,6 +33,7 @@ object arriba{
 	}
 	method imagenSiguiente(){return self.image()}
 	method salto(){return saltoDesdeIzquierda}
+	method hit() {return hitDerecha}
 }
 
 object abajo{
@@ -46,6 +47,7 @@ object abajo{
 	}
 	method imagenSiguiente(){return self.image()}
 	method salto(){return saltoDesdeIzquierda}
+	method hit() {return hitDerecha}
 }
 
 object derecha{
@@ -65,7 +67,7 @@ object derecha{
 object izquierda{
 	const property direccionOpuesta = derecha
 	var property animacion = 1
-	method image(){return "aang__movement/toLeft/"+ animacion + ".png"}
+	method image(){return "aang__movement/toLeft/"+ animacion.toString() + ".png"}
     method position() = aang.position().left(1)
 	method avanzarAnimaciones(){
 		animacion++
@@ -82,7 +84,7 @@ object hitIzquierda{
 	method image(){return "fight/toLeft/" + animacion.toString() + ".png" }
 	method avanzarAnimaciones(){
 		if(animacion < 6){
-		animacion = animacion + 1
+		animacion++ 1
 		}else {game.removeTickEvent("golpe")
 				animacion = 1}
 	}
@@ -95,11 +97,10 @@ object hitDerecha{
 	method image(){return "fight/toRight/" + animacion.toString() + ".png" }
 	method avanzarAnimaciones(){
 		if(animacion < 6){
-			animacion = animacion + 1
+			animacion++ 1
 		}else {game.removeTickEvent("golpe")
 				animacion = 1
 		}
 		}
 	method imagenSiguiente(){return self.image()}
 }
-

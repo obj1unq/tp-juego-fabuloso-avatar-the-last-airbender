@@ -15,7 +15,10 @@ object aang{
 		self.position(arriba.position())
 		game.onTick(500, "saltar", {self.caer()})
 	}
-	
+	method guardar(elemento){
+		scoreUnidad.aumentar()
+		game.removeVisual(elemento)
+	}
 	method caer(){
 		self.position(abajo.position())
 		game.removeTickEvent("saltar")
@@ -58,7 +61,7 @@ object aang{
 	}
 	method figth(tipoDePelea){
 		self.perderEnergia(tipoDePelea.energiaAPerder())
-		game.onTick(500,"golpe",{tipoDePelea.avanzarAnimacion(1)})
+		game.onTick(100,"golpe",{animacion.dePersonaje(self, direccionActual.hit())})
 		
 	}
 }	
