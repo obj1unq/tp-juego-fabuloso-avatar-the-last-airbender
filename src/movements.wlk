@@ -1,71 +1,76 @@
 import wollok.game.*
 import characters.*
 
+object saltoDesdeIzquierda{
+	var property animacion = 1
+	method image(){return "aang__movement/jump/fromRight/"+ animacion + ".png"}
+	method avanzarAnimaciones(){
+		animacion++
+		if(animacion>4){animacion=1}
+	}
+	method imagenSiguiente(){return self.image()}
+}
+
+object saltoDesdeDerecha{
+	var property animacion = 1
+	method image(){return "aang__movement/jump/fromLeft/"+ animacion + ".png"}
+	method avanzarAnimaciones(){
+		animacion++
+		if(animacion>4){animacion=1}
+	}
+	method imagenSiguiente(){return self.image()}
+}
+
 object arriba{
-	var property animacion = 0
-	const property imagenes = ["aang__movement/toTop/1.png", "aang__movement/toTop/2.png", "aang__movement/toTop/3.png"]
-	method image(){return "aang__movement/toTop/"+ animacion.toString() + ".png"}
+	const property direccionOpuesta = abajo
+	var property animacion = 1
+	method image(){return "aang__movement/toTop/"+ animacion + ".png"}
     method position() = aang.position().up(1)
-	method avanzarAnimacion(n){
+	method avanzarAnimaciones(){
 		animacion++
 		if(animacion>9){animacion=1}
 	}
+	method imagenSiguiente(){return self.image()}
+	method salto(){return saltoDesdeIzquierda}
 }
 
 object abajo{
-	var property animacion = 0
-	method image(){return "aang__movement/toBottom/"+ animacion.toString() + ".png"}
+	const property direccionOpuesta = arriba
+	var property animacion = 1
+	method image(){return "aang__movement/toBottom/"+ animacion + ".png"}
     method position() = aang.position().down(1)
-	method avanzarAnimacion(n){
+	method avanzarAnimaciones(){
 		animacion++
 		if(animacion>9){animacion=1}
 	}
+	method imagenSiguiente(){return self.image()}
+	method salto(){return saltoDesdeIzquierda}
 }
 
 object derecha{
-	var property animacion = 0
-	method image(){return "aang__movement/toRight/"+ animacion.toString() + ".png"}
+	const property direccionOpuesta = izquierda 
+	var property animacion = 1
+	method image(){return "aang__movement/toRight/"+ animacion + ".png"}
     method position() = aang.position().right(1)
-	method avanzarAnimacion(n){
+	method avanzarAnimaciones(){
 		animacion++
 		if(animacion>4){animacion=1}
 	}
+	method imagenSiguiente(){return self.image()}
+	method salto(){return saltoDesdeIzquierda}
 }
 
 object izquierda{
-	var property animacion = 0
-	method image(){return "aang__movement/toLeft/"+ animacion.toString() + ".png"}
+	const property direccionOpuesta = derecha
+	var property animacion = 1
+	method image(){return "aang__movement/toLeft/"+ animacion + ".png"}
     method position() = aang.position().left(1)
-	method avanzarAnimacion(n){
+	method avanzarAnimaciones(){
 		animacion++
 		if(animacion>4){animacion=1}
 	}
+	method imagenSiguiente(){return self.image()}
+	method salto(){return saltoDesdeDerecha}
+
 }
-object hitIzquierda{
-	var property animacion = 1
-	const property energiaAPerder = 1
-	method image(){return "fight/toLeft/" + animacion.toString() + ".png" }
-	method avanzarAnimacion(n){
-		if(animacion < 6){
-		animacion = animacion + n
-		aang.image(self.image())
-		
-		}else {game.removeTickEvent("golpe")
-				animacion = 1
-		}
-		
-	}
-}
-object hitDerecha{
-	var property animacion = 1
-	const property energiaAPerder = 1
-	method image(){return "fight/toRight/" + animacion.toString() + ".png" }
-	method avanzarAnimacion(n){
-		if(animacion < 6){
-		animacion = animacion + n
-		aang.image(self.image())
-		}else {game.removeTickEvent("golpe")
-				animacion = 1
-		}
-	}
-}
+
