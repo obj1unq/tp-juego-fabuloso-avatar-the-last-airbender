@@ -53,7 +53,6 @@ object barraVida{
 	
 }
 
-
 object air {
 	var  animacion = 1
 	var property image = "elements/air/" + animacion + ".png"
@@ -80,3 +79,4 @@ object water {
 	var property score = 0
 	method position(){return game.at()}
 }*/
+}

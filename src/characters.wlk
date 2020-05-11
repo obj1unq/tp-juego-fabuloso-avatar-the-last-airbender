@@ -1,4 +1,5 @@
 import wollok.game.*
+import animations.*
 import movements.*
 import elementosYBarra.*
 import movements.*
@@ -6,9 +7,29 @@ import movements.*
 object aang{
 	var property vida = 6
 	var property energia = 7
+	var property direccionActual = derecha
 	var property position = game.at(1,1)
 	var property image = "aang__movement/toBottom/stopped--1.png"
 	var property direccionActual = derecha 
+	
+	
+	method saltar(){
+		game.onTick(100, "salto", {animacion.dePersonaje(self, direccionActual.salto())})
+		self.position(arriba.position())
+		game.onTick(500, "saltar", {self.caer()})
+	}
+	
+	method caer(){
+		self.position(abajo.position())
+		game.removeTickEvent("saltar")
+		game.removeTickEvent("salto")
+		self.image(direccionActual.image())
+	}
+	
+	/*method colisionarPared(){
+		self.position(direccionActual.direccionOpuesta().position())
+		game.removeTickEvent("saltar")
+	}*/
 	
 	
 	method saltar(){
@@ -62,5 +83,5 @@ object aang{
 		game.onTick(500,"golpe",{tipoDePelea.avanzarAnimacion(1)})
 		
 	}
+}	
 }
-
