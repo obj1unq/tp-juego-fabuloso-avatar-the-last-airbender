@@ -2,7 +2,7 @@ import wollok.game.*
 import characters.*
 import movements.*
 
-object Stage {
+object stage {
 	
 	method crearPiso(){}
 }

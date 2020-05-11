@@ -47,11 +47,11 @@ program avatarGame {
 	keyboard.right().onPressDo({aang.mover(derecha)})	
 	keyboard.left().onPressDo({aang.mover(izquierda)})
 	keyboard.v().onPressDo({aang.perderVida()})
-	keyboard.a().onPressDo({scoreUnidad.aumentar()})
 	/////////////////////
 	// C O L L I D E S //
 	/////////////////////
-	
+	game.onCollideDo(aang,{elemento => aang.guardar(elemento)})
+	game.onCollideDo(aang,{elemento => aang.guardar(elemento)})
 	///////////////
 	
     // S T A R T //
