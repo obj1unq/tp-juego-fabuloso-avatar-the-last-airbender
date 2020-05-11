@@ -3,7 +3,7 @@ import characters.*
 
 object saltoDesdeIzquierda{
 	var property animacion = 1
-	method image(){return "aang__movement/jump/fromRight/"+ animacion + ".png"}
+	method image(){return "aang__movement/jump/fromRight/"+ animacion.toString() + ".png"}
 	method avanzarAnimaciones(){
 		animacion++
 		if(animacion>4){animacion=1}
@@ -13,7 +13,7 @@ object saltoDesdeIzquierda{
 
 object saltoDesdeDerecha{
 	var property animacion = 1
-	method image(){return "aang__movement/jump/fromLeft/"+ animacion + ".png"}
+	method image(){return "aang__movement/jump/fromLeft/"+ animacion.toString() + ".png"}
 	method avanzarAnimaciones(){
 		animacion++
 		if(animacion>4){animacion=1}
@@ -24,7 +24,7 @@ object saltoDesdeDerecha{
 object arriba{
 	const property direccionOpuesta = abajo
 	var property animacion = 1
-	method image(){return "aang__movement/toTop/"+ animacion + ".png"}
+	method image(){return "aang__movement/toTop/"+ animacion.toString() + ".png"}
     method position() = aang.position().up(1)
 	method avanzarAnimaciones(){
 		animacion++
@@ -37,7 +37,7 @@ object arriba{
 object abajo{
 	const property direccionOpuesta = arriba
 	var property animacion = 1
-	method image(){return "aang__movement/toBottom/"+ animacion + ".png"}
+	method image(){return "aang__movement/toBottom/"+ animacion.toString() + ".png"}
     method position() = aang.position().down(1)
 	method avanzarAnimaciones(){
 		animacion++
@@ -58,6 +58,7 @@ object derecha{
 	}
 	method imagenSiguiente(){return self.image()}
 	method salto(){return saltoDesdeIzquierda}
+	method hit(){return hitDerecha}
 }
 
 object izquierda{
@@ -71,6 +72,33 @@ object izquierda{
 	}
 	method imagenSiguiente(){return self.image()}
 	method salto(){return saltoDesdeDerecha}
-
+	method hit() {return hitIzquierda}
+}
+object hitIzquierda{
+	var property animacion = 1
+	const property danio = 2
+	const property energiaAPerder = 1
+	method image(){return "fight/toLeft/" + animacion.toString() + ".png" }
+	method avanzarAnimaciones(){
+		if(animacion < 6){
+		animacion = animacion + 1
+		}else {game.removeTickEvent("golpe")
+				animacion = 1}
+	}
+	method imagenSiguiente(){return self.image()}
+}
+object hitDerecha{
+	const property danio = 2
+	var property animacion = 1
+	const property energiaAPerder = 1
+	method image(){return "fight/toRight/" + animacion.toString() + ".png" }
+	method avanzarAnimaciones(){
+		if(animacion < 6){
+			animacion = animacion + 1
+		}else {game.removeTickEvent("golpe")
+				animacion = 1
+		}
+		}
+	method imagenSiguiente(){return self.image()}
 }
 

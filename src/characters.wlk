@@ -1,7 +1,8 @@
 import wollok.game.*
 import movements.*
-import elementosYBarra.*
+import elements.*
 import movements.*
+import animations.*
 
 object aang{
 	var property vida = 6
@@ -12,7 +13,7 @@ object aang{
 	
 	
 	method saltar(){
-		game.onTick(100, "salto", {animacion.dePersonaje(self, direccionActual.salto())})
+		//game.onTick(100, "salto", {animacion.dePersonaje(self, direccionActual.salto())})
 		self.position(arriba.position())
 		game.onTick(500, "saltar", {self.caer()})
 	}
@@ -49,7 +50,7 @@ object aang{
 		if(self.vida() > 0){
 			vida -= 1
 			barraVida.descontarBarra()
-		}else {game.stop()}
+		}
 	}
 	method aumentarVida(){
 		if(self.vida() < 6){
@@ -59,8 +60,9 @@ object aang{
 	}
 	method figth(tipoDePelea){
 		self.perderEnergia(tipoDePelea.energiaAPerder())
-		game.onTick(500,"golpe",{tipoDePelea.avanzarAnimacion(1)})
+		game.onTick(100, "golpe", {animacion.dePersonaje(self,direccionActual.hit())})
 		
 	}
+	
 }
 
