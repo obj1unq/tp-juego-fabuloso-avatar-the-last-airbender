@@ -1,5 +1,6 @@
 import wollok.game.*
 import characters.*
+import animations.*
 
 object saltoDesdeIzquierda{
 	var property animacion = 1
