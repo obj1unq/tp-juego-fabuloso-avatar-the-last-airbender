@@ -1,3 +1,55 @@
+
+import wollok.game.*
+import characters.*
+import movements.*
+import elements.*
+import animations.*
+
+program avatarGame {
+
+	////////////////
+	// S E T  U P //
+	////////////////
+	
+	game.title("Avatar, the last airbender")
+	game.width(15)
+	game.height(12)
+	game.onTick(100, "avanzarAang", {animacion.deElemento(air)
+		                             animacion.deElemento(water)})
+	
+	///////////////////
+	// V I S U A L S //
+	///////////////////
+	game.addVisual(aang)
+	
+	//BARRAS Y ELEMENTOS//
+	game.addVisual(aire)
+	game.addVisual(barraVida)
+	game.addVisual(barraMana)
+	//game.addVisual(score)
+	game.addVisualIn(air, game.center())
+	game.addVisualIn(water, game.at(3,3))
+
+		
+	/////////////////////
+	// K E Y B O A R D //
+	/////////////////////
+	keyboard.up().onPressDo({aang.mover(arriba)})
+	keyboard.space().onPressDo({aang.saltar()})
+	keyboard.down().onPressDo({aang.mover(abajo)})	
+	keyboard.right().onPressDo({aang.mover(derecha)})	
+	keyboard.left().onPressDo({aang.mover(izquierda)})
+
+	/////////////////////
+	// C O L L I D E S //
+	/////////////////////
+	
+	///////////////
+    // S T A R T //
+    ///////////////
+    
+	game.start()
+=======
 import wollok.game.*
 import characters.*
 import movements.*
