@@ -10,10 +10,12 @@ program avatarGame {
 	// S E T  U P //
 	////////////////
 	game.title("Avatar, the last airbender")
+
 	game.width(15)
 	game.height(12)
 	game.onTick(100, "avanzarAang", {animacion.deElemento(air)
 		                             animacion.deElemento(water)})
+
 	
 	///////////////////
 	// V I S U A L S //
