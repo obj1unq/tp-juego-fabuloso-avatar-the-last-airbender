@@ -8,3 +8,6 @@ object animacion {
 		elemento.avanzarAnimaciones()
 		return elemento.image(elemento.imagenSiguiente())
 	}
+	
+
+}
