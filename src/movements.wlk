@@ -17,7 +17,9 @@ object saltoDesdeDerecha{
 	method image(){return "aang__movement/jump/fromLeft/"+ animacion.toString() + ".png"}
 	method avanzarAnimaciones(){
 		animacion++
-		if(animacion>4){animacion=1}
+		if(animacion>4){
+			animacion=1
+		}
 	}
 	method imagenSiguiente(){return self.image()}
 }

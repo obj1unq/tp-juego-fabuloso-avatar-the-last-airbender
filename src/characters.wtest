@@ -1,0 +1,35 @@
+import wollok.game.*
+import characters.*
+import movements.*
+test "Aang pierde energia" {
+	aang.energia(7)
+	aang.perderEnergia(3)
+	assert.that(aang.energia() == 4)
+
+}
+test "Aang aumenta energia"{
+	aang.energia(1)
+	aang.aumentarEnergia()
+	assert.that(aang.energia()==2)
+}
+test "Aang se mueve y cambia de posicion"{
+	const nuevaPosicion = aang.position().right(1)
+	aang.mover(derecha)
+	assert.equals(nuevaPosicion,aang.position())
+	
+}
+test "Aang pelea y pierde energia"{
+	aang.energia(7)
+	aang.figth(hitIzquierda)
+	assert.that(aang.energia()==6)
+}
+test "Aang pierde vida"{
+	aang.vida(6)
+	aang.perderVida()
+	assert.that(aang.vida() == 5)
+}
+test "Aang aumenta su vida"{
+	aang.vida(1)
+	aang.aumentarVida()
+	assert.that(aang.vida() == 2)
+}
