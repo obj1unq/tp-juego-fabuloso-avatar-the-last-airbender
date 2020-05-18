@@ -86,7 +86,7 @@ object barraMana{
 ////////////////////////////
 object scoreUnidad{
 	var property score = 0
-	method position(){return game.at(10,10)}
+	method position(){return game.at(19,8)}
 	method image() {return "score/unidad/"+ score.toString() + ".png"}
 	method imagenSiguiente(){return self.image()}
 	
@@ -100,7 +100,7 @@ object scoreUnidad{
 
 object scoreDecena{
 	var property score = 0
-	method position(){return game.at(9,10)}
+	method position(){return game.at(18,8)}
 	method image() {return "score/decena/"+ score.toString()+".png"}
 	method aumentar(){
 		if (self.score() == 9){
@@ -111,7 +111,7 @@ object scoreDecena{
 }
 object scoreCentena{
 	var property score = 0
-	method position(){return game.at(8,10)}
+	method position(){return game.at(17,8)}
 	method image() {return "score/centena/"+ score.toString()+".png"}
 	method aumentar(){
 		if (self.score() == 9){

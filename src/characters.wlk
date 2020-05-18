@@ -2,6 +2,7 @@ import wollok.game.*
 import animations.*
 import elements.*
 import movements.*
+import Escenarios.*
 
 object aang{
 	var property vida = 6
