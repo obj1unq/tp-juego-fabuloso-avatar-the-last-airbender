@@ -1,28 +1,21 @@
 import wollok.game.*
-import animations.*
 import characters.*
 ////////////////////////////////////
 ///////////ELEMENTOS////////////////
 ///////////////////////////////////
-object air {
-	var  animacion = 1
-	var property image = "elements/air/" + animacion.toString() + ".png"
-	method imagenSiguiente() = "elements/air/" + animacion + ".png"
+
+class Elemento{
+	const elemento
+	const fotogramas = 12
+	var animacion = 1
+	method image() = "elements/" + elemento + "/" + animacion + ".png"
 	method avanzarAnimaciones(){
 		animacion++
-		if(animacion > 12){animacion = 1}
+		if(animacion>fotogramas){animacion=1}
 	}
 }
 
-object water {
-	var  animacion = 1
-	var property image = "elements/water/" + animacion.toString() + ".png"
-	method imagenSiguiente() = "elements/water/" + animacion.toString() + ".png"
-	method avanzarAnimaciones(){
-		animacion++
-		if(animacion > 12){animacion = 1}
-	}
-} 
+
 object aire {
 	method image() = "barras_elementos/aire.png"
 	method position()  {return game.at(1,10)} 
@@ -84,39 +77,67 @@ object barraMana{
 /////////////////////////////
 //////S C O R E//////////////
 ////////////////////////////
+
+
 object scoreUnidad{
-	var property score = 0
-	method position(){return game.at(19,8)}
-	method image() {return "score/unidad/"+ score.toString() + ".png"}
-	method imagenSiguiente(){return self.image()}
+	
+	var score = 0
+	
+	method position(){
+		return game.at(19,9)
+	}
+	method image() {
+		return "score/unidad/"+ score + ".png"
+	}
 	
 	method aumentar(){
-		if (self.score() == 9){
+		score++
+		if (score > 9){
 			scoreDecena.aumentar()
 			score = 0
-		}else {score += 1}
+		}
 	}
+
 }
 
 object scoreDecena{
-	var property score = 0
-	method position(){return game.at(18,8)}
-	method image() {return "score/decena/"+ score.toString()+".png"}
-	method aumentar(){
-		if (self.score() == 9){
-			scoreCentena.aumentar()
-			score = 0
-		}else {score += 1}
+	
+	var score = 0
+	
+	method position(){
+		return game.at(18,9)
 	}
-}
-object scoreCentena{
-	var property score = 0
-	method position(){return game.at(17,8)}
-	method image() {return "score/centena/"+ score.toString()+".png"}
-	method aumentar(){
-		if (self.score() == 9){
-			scoreUnidad.aumentar()
-		}else {score += 1}
+	method image() {
+		return "score/decena/"+ score + ".png"
 	}
 	
+	method aumentar(){
+		score++
+		if (score > 9){
+			scoreCentena.aumentar()
+			score = 0
+		}
+	}
+
+}
+
+object scoreCentena{
+	
+	var score = 0
+	
+	method position(){
+		return game.at(17,9)
+	}
+	method image() {
+		return "score/centena/"+ score + ".png"
+	}
+	
+	method aumentar(){
+		score++
+		if (score > 9){
+			scoreUnidad.aumentar()
+			score = 0
+		}
+	}
+
 }

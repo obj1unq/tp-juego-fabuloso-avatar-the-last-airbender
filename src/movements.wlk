@@ -1,30 +1,42 @@
 import wollok.game.*
 import characters.*
-import animations.*
-
-object saltoDesdeIzquierda{
-	var property animacion = 1
-	method image(){return "aang__movement/jump/fromRight/"+ animacion.toString() + ".png"}
-	method avanzarAnimaciones(){
-		animacion++
-		if(animacion>4){animacion=1}
-	}
-	method imagenSiguiente(){return self.image()}
-}
-
-object saltoDesdeDerecha{
-	var property animacion = 1
-	method image(){return "aang__movement/jump/fromLeft/"+ animacion.toString() + ".png"}
-	method avanzarAnimaciones(){
-		animacion++
-		if(animacion>4){
-			animacion=1
-		}
-	}
-	method imagenSiguiente(){return self.image()}
-}
 
 object arriba{
+	var animacion = 1
+	const fotogramas = 9
+	const reiniciar = 1
+	
+	method image(){
+		return "aang__movement/toTop/" + animacion + ".png"
+	}
+	
+	method position(){
+		return aang.position().up(1)
+	}
+	
+	method direccionOpuesta(){
+		return abajo
+	}
+	
+	
+	method salto(){
+		return saltoDesdeIzquierda
+	}
+	
+	method hit(){
+		return hitDerecha
+	}
+	
+	method avanzarAnimaciones(){
+		animacion++
+		if(animacion>fotogramas){
+			animacion=reiniciar
+		}
+	}
+	
+}
+
+/*object arriba{
 	const property direccionOpuesta = abajo
 	var property animacion = 1
 	method image(){return "aang__movement/toTop/"+ animacion.toString() + ".png"}
@@ -36,7 +48,8 @@ object arriba{
 	method imagenSiguiente(){return self.image()}
 	method salto(){return saltoDesdeIzquierda}
 	method hit() {return hitDerecha}
-}
+}*/
+
 
 object abajo{
 	const property direccionOpuesta = arriba
@@ -105,4 +118,53 @@ object hitDerecha{
 		}
 		}
 	method imagenSiguiente(){return self.image()}
+}
+
+object saltoDesdeIzquierda{
+	var property animacion = 1
+	method image(){return "aang__movement/jump/fromRight/"+ animacion.toString() + ".png"}
+	method avanzarAnimaciones(){
+		animacion++
+		if(animacion>4){animacion=1}
+	}
+	method imagenSiguiente(){return self.image()}
+}
+
+object saltoDesdeDerecha{
+	var property animacion = 1
+	method image(){return "aang__movement/jump/fromLeft/"+ animacion.toString() + ".png"}
+	method avanzarAnimaciones(){
+		animacion++
+		if(animacion>4){
+			animacion=1
+		}
+	}
+	method imagenSiguiente(){return self.image()}
+}
+
+
+///////////////////
+// A IMPLEMENTAR //
+///////////////////
+
+class Movimiento{
+	
+	const fotogramas
+	
+	const direccionDelMovimiento
+	
+	var animacion = 1
+	
+	const property position
+	
+	method image(){
+		return "aang__movement/" + direccionDelMovimiento + "/" + "animacion" + ".png"
+	}
+	
+	method avanzarAnimacion(){
+		animacion++
+		if(animacion>fotogramas){
+			animacion=1
+		}
+	}
 }
