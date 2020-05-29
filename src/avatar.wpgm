@@ -1,65 +1,11 @@
 import wollok.game.*
-import characters.*
-import movements.*
-import elements.*
-import animations.*
-import Escenarios.*
+import juego.*
+import mainMenu.*
 
 program avatarGame {
-
-	////////////////
-	// S E T  U P //
-	////////////////
 	
-	game.title("Avatar, the last airbender")
-	game.width(20)
-	game.height(10)
-	game.onTick(100, "avanzarAang", {animacion.deElemento(air)
-		                             animacion.deElemento(water)})
-	
-	///////////////////
-	// V I S U A L S //
-	///////////////////
-	game.addVisual(boardGround)
-	game.addVisual(aang)
-		
-	//BARRAS Y ELEMENTOS//
-	game.addVisual(aire)
-	game.addVisual(barraVida)
-	game.addVisual(barraMana)
-	game.addVisual(scoreUnidad)
-	game.addVisual(scoreDecena)
-	game.addVisual(scoreCentena)
-	game.addVisualIn(air, game.center())
-	game.addVisualIn(water, game.at(3,3))
-	
-	/////////////////////
-	////E V E N T O S///
-	////////////////////
-	game.onTick(3*1000, "regeneracionMana",{ aang.aumentarEnergia()})
-		
-	/////////////////////
-	// K E Y B O A R D //
-	/////////////////////
-	keyboard.c().onPressDo({aang.figth(hitDerecha)})
-	keyboard.up().onPressDo({aang.mover(arriba)})
-	keyboard.space().onPressDo({aang.saltar()})
-	keyboard.down().onPressDo({aang.mover(abajo)})	
-	keyboard.right().onPressDo({aang.mover(derecha)})	
-	keyboard.left().onPressDo({aang.mover(izquierda)})
-	//keyboard.v().onPressDo({aang.perderVida()})
-	//keyboard.a().onPressDo({scoreUnidad.aumentar()})
-	
-	
-	/////////////////////
-	// C O L L I D E S //
-	/////////////////////
-	game.onCollideDo(aang,{elemento => aang.guardar(elemento)})
-	///////////////
-	
-    // S T A R T //
-    ///////////////
-    
+	juego.configurar()
+	mainMenu.mostrar()
 	game.start()
 	
 }

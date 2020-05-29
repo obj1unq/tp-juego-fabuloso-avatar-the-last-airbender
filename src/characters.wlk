@@ -9,28 +9,25 @@ object aang{
 	var property energia = 7
 	var property direccionActual = derecha
 	var property position = game.at(1,1)
-	var property image = "aang__movement/toBottom/stopped--1.png"
+	var property image = direccionActual.image() //"aang__movement/toBottom/stopped--1.png"
 	
 	method saltar(){
 		game.onTick(100, "salto", {animacion.dePersonaje(self, direccionActual.salto())})
 		self.position(arriba.position())
 		game.onTick(500, "saltar", {self.caer()})
 	}
+	
 	method guardar(elemento){
 		scoreUnidad.aumentar()
 		game.removeVisual(elemento)
 	}
+	
 	method caer(){
 		self.position(abajo.position())
 		game.removeTickEvent("saltar")
 		game.removeTickEvent("salto")
 		self.image(direccionActual.image())
 	}
-	
-	/*method colisionarPared(){
-		self.position(direccionActual.direccionOpuesta().position())
-		game.removeTickEvent("saltar")
-	}*/
 	
 	method mover(direccion){
 		direccionActual = direccion

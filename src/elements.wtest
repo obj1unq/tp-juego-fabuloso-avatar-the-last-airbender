@@ -30,7 +30,7 @@ test "La barra de vida sube si aang gana vida"{
 ///////////// S C O R E///////////////////
 /////////////////////////////////////////
 
-test "aumento una unidad y el score aumenta 1 unidad"{
+/*test "aumento una unidad y el score aumenta 1 unidad"{
 	scoreUnidad.score(3)
 	scoreUnidad.aumentar()
 	assert.that(scoreUnidad.score() == 4)
@@ -48,4 +48,4 @@ test "Aumenta una unidad a 99 la centena aumenta 1 la decena y la unidad pasan a
 	assert.that(scoreUnidad.score() == 0)
 	assert.that( scoreDecena.score() == 0)
 	assert.that( scoreCentena.score() == 1)
-}
+}*/
