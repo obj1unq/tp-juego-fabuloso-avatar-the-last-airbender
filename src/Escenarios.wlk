@@ -15,7 +15,9 @@ method image(){
 
 method esAtravesable(personaje){
 	return false
+
 } 
+//chingolo
 
 }
 
