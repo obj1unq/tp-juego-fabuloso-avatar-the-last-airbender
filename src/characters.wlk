@@ -24,8 +24,14 @@ object aang{
 	method estaSobreEscalera(){
 		return game.getObjectsIn(self.position()).any({i => i.image() == "Stage/Escalera.png"or i.image()=="Stage/Escalera-Base.png"})
 	}
+	
+	method abajoHayEscalera(){
+		return game.getObjectsIn(self.position().down(1)).any({i => i.image() == "Stage/Escalera.png"or i.image()=="Stage/Escalera-Base.png"})
+	}
 	method caer(){
+		if (self.puedeMover(abajo)){
 		self.position(abajo.position())
+		}
 		game.removeTickEvent("saltar")
 		game.removeTickEvent("salto")
 		self.image(direccionActual.image())
@@ -69,6 +75,10 @@ object aang{
 			vida += 1
 			barraVida.aumentarBarra()
 		}
+	}
+	
+	method esAtravesable(personaje){
+		return false
 	}
 	method figth(tipoDePelea){
 		self.perderEnergia(tipoDePelea.energiaAPerder())

@@ -11,7 +11,7 @@ object arriba{
 	}
 	
 	method position(){
-		return  {aang.position().up(1)}
+		return  aang.position().up(1)
 		
 	}
 	
@@ -37,6 +37,44 @@ object arriba{
 	
 }
 
+object arribaEnEscalera{
+	var animacion = 1
+	const fotogramas = 9
+	const reiniciar = 1
+	
+	method image(){
+		return "aang__movement/toTop/" + animacion + ".png"
+	}
+	
+	method position(){
+		return if(aang.estaSobreEscalera()){aang.position().up(1)}
+		else {aang.position().up(0)} 
+		
+	}
+	
+	method direccionOpuesta(){
+		return abajo
+	}
+	
+	
+	method salto(){
+		return saltoDesdeIzquierda
+	}
+	
+	method hit(){
+		return hitDerecha
+	}
+	
+	method avanzarAnimaciones(){
+		animacion++
+		if(animacion>fotogramas){
+			animacion=reiniciar
+		}
+	}
+	
+	
+}
+
 /*object arriba{
 	const property direccionOpuesta = abajo
 	var property animacion = 1
@@ -50,6 +88,23 @@ object arriba{
 	method salto(){return saltoDesdeIzquierda}
 	method hit() {return hitDerecha}
 }*/
+object abajoEnEscalera{
+	const property direccionOpuesta = arriba
+	var property animacion = 1
+	method image(){return "aang__movement/toBottom/"+ animacion.toString() + ".png"}
+    method position(){
+		return if(aang.estaSobreEscalera()or aang.abajoHayEscalera()){aang.position().down(1)}
+		else {aang.position().down(0)} 
+		
+	}
+	method avanzarAnimaciones(){
+		animacion++
+		if(animacion>9){animacion=1}
+	}
+	method imagenSiguiente(){return self.image()}
+	method salto(){return saltoDesdeIzquierda}
+	method hit() {return hitDerecha}
+}
 
 
 object abajo{
