@@ -30,11 +30,19 @@ object aang{
 	}
 	
 	method mover(direccion){
-		direccionActual = direccion
-		self.position(direccion.position())
-		direccion.avanzarAnimaciones()
-		self.image(direccion.image())
+		if (self.puedeMover(direccion)){
+			direccionActual = direccion
+			self.position(direccion.position())
+			direccion.avanzarAnimaciones()
+			self.image(direccion.image())}
+			
 	}
+	
+	method puedeMover(direccion){
+		const objeto = game.getObjectsIn(direccion.position())
+		return  objeto.isEmpty() or objeto.head().esAtravesable(self)
+	}
+	
 	method perderEnergia(energiaAPerder){
 		if (self.energia() > 0) {
 		energia -= energiaAPerder

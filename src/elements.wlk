@@ -8,11 +8,15 @@ class Elemento{
 	const elemento
 	const fotogramas = 12
 	var animacion = 1
+	const property position
 	method image() = "elements/" + elemento + "/" + animacion + ".png"
 	method avanzarAnimaciones(){
 		animacion++
 		if(animacion>fotogramas){animacion=1}
 	}
+	method esAtravesable(personaje){
+	return true
+} 
 }
 
 
