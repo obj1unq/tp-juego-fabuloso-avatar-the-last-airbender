@@ -11,7 +11,8 @@ object arriba{
 	}
 	
 	method position(){
-		return aang.position().up(1)
+		return  {aang.position().up(1)}
+		
 	}
 	
 	method direccionOpuesta(){

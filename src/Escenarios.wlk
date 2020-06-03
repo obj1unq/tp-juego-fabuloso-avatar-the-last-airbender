@@ -32,10 +32,24 @@ method image(){
 	
 }
 method esAtravesable(personaje){
-	return self.position().y() > personaje.position().y()
+	return false //self.position().y() > personaje.position().y()
 } 
 }
 
+
+class Escalera{
+	
+	const property position
+	const images=["Stage/Escalera.png","Stage/Escalera-Base.png"]
+	const indice = 0
+	
+	method image(){
+		return images.get(indice)
+	}
+	method esAtravesable(personaje){
+		return true
+	}
+}
 
 
 

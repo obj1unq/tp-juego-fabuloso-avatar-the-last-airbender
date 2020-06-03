@@ -34,6 +34,7 @@ object nivel1 {
 		game.addVisual(board)
 		self.dibujarPisos()
 		self.dibujarPlataformas()
+		self.dibujarEscalera()
 		game.addVisual(aang)
 		game.addVisual(aire)
 		game.addVisual(barraVida)
@@ -52,6 +53,11 @@ object nivel1 {
 		
 		
 	}
+	method dibujarEscalera(){
+		game.addVisual(new Escalera(position= game.at(1,5),indice=1))
+		game.addVisual(new Escalera(position= game.at(1,6),indice=0))
+	}
+	
 	method dibujarPlataformas(){
 		const plataforma1 =[0,1,2,5,6,7,9,10,11,12,13,14,15,17,18,19]
 		const plataforma2 =[0,1,2,3,4,7,8,9,10,11,13,14,15,16,17,18,19]
