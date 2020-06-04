@@ -17,7 +17,7 @@ method esAtravesable(personaje){
 	return false
 
 } 
-//chingolo
+
 
 }
 
@@ -51,7 +51,15 @@ class Escalera{
 	}
 }
 
-
+class BloqueVacio{
+	const property position
+	
+	method image(){return"Stage/Muro.png"}
+	
+	method esAtravesable(personaje){
+		return false
+	}
+}
 
 
 

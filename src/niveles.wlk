@@ -5,6 +5,7 @@ import movements.*
 import elements.*
 import animations.*
 import Escenarios.*
+import wollok.game.Position
 
 object nivel1 {
 	const board = new BoardGround(image="Stage/Background-Stage1.jpg")
@@ -32,6 +33,7 @@ object nivel1 {
 	
 	method agregarVisuales(){
 		game.addVisual(board)
+		self.limitarMapa()
 		self.dibujarPisos()
 		self.dibujarPlataformas()
 		self.dibujarEscalera()
@@ -73,6 +75,25 @@ object nivel1 {
 		plataforma.forEach({x =>game.addVisual(new FloatingFloor(position= game.at(x,y)))})
 	}	
 	
+	method dibujarBloqueVacioEn(posicion){
+		game.addVisual(new BloqueVacio(position=posicion))
+	}
+	
+	method limitarMapa(){
+	const ancho = game.width()   
+    const alto = game.height()  
+    const posicionesParaGenerarMuros = []
+		
+   (0 .. ancho).forEach{ num => posicionesParaGenerarMuros.add(new Position(x=num,y= alto))} // lado superior
+   (0 .. ancho).forEach{ num => posicionesParaGenerarMuros.add(new Position(x=num,y= -1))} // lado inferior
+   (0 .. alto).forEach{ num => posicionesParaGenerarMuros.add(new Position(x=ancho,y= num))} // lado derecho
+   (0 .. alto).forEach{ num => posicionesParaGenerarMuros.add(new Position(x=-1,y= num))} // lado izquierdo
+    
+   posicionesParaGenerarMuros.forEach({posicion => self.dibujarBloqueVacioEn(posicion)})
+
+		
+	}
+	
 	method configurarTeclado(){
 		keyboard.c().onPressDo({aang.figth(hitDerecha)})
 		keyboard.up().onPressDo({aang.mover(arribaEnEscalera)})
@@ -99,3 +120,4 @@ object elementos {
 		elementos.forEach({posicion =>self.agregarElemento(new Elemento(elemento= "water", position=posicion ))})
 	}
 } 
+
