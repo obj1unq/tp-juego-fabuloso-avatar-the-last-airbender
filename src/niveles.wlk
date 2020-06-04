@@ -5,6 +5,7 @@ import movements.*
 import elements.*
 import animations.*
 import Escenarios.*
+import wollok.game.Position
 
 object nivel1 {
 	const board = new BoardGround(image="Stage/Background-Stage1.jpg")
@@ -32,8 +33,10 @@ object nivel1 {
 	
 	method agregarVisuales(){
 		game.addVisual(board)
+		self.limitarMapa()
 		self.dibujarPisos()
 		self.dibujarPlataformas()
+		self.dibujarEscalera()
 		game.addVisual(aang)
 		game.addVisual(aire)
 		game.addVisual(barraVida)
@@ -52,9 +55,16 @@ object nivel1 {
 		
 		
 	}
+	method dibujarEscalera(){
+		game.addVisual(new Escalera(position= game.at(5,1),indice=1))
+		game.addVisual(new Escalera(position= game.at(5,2),indice=0))
+		game.addVisual(new Escalera(position= game.at(14,3),indice=1))
+		game.addVisual(new Escalera(position= game.at(14,4),indice=0))
+	}
+	
 	method dibujarPlataformas(){
-		const plataforma1 =[0,1,2,5,6,7,9,10,11,12,13,14,15,17,18,19]
-		const plataforma2 =[0,1,2,3,4,7,8,9,10,11,13,14,15,16,17,18,19]
+		const plataforma1 =[0,1,2,6,7,9,10,11,12,13,14,15,17,18,19]
+		const plataforma2 =[0,1,2,3,4,7,8,9,10,11,13,15,16,17,18,19]
 		
 		self.dibujarPlataformasEn(2,plataforma1)
 		self.dibujarPlataformasEn(4,plataforma2)
@@ -65,11 +75,30 @@ object nivel1 {
 		plataforma.forEach({x =>game.addVisual(new FloatingFloor(position= game.at(x,y)))})
 	}	
 	
+	method dibujarBloqueVacioEn(posicion){
+		game.addVisual(new BloqueVacio(position=posicion))
+	}
+	
+	method limitarMapa(){
+	const ancho = game.width()   
+    const alto = game.height()  
+    const posicionesParaGenerarMuros = []
+		
+   (0 .. ancho).forEach{ num => posicionesParaGenerarMuros.add(new Position(x=num,y= alto))} // lado superior
+   (0 .. ancho).forEach{ num => posicionesParaGenerarMuros.add(new Position(x=num,y= -1))} // lado inferior
+   (0 .. alto).forEach{ num => posicionesParaGenerarMuros.add(new Position(x=ancho,y= num))} // lado derecho
+   (0 .. alto).forEach{ num => posicionesParaGenerarMuros.add(new Position(x=-1,y= num))} // lado izquierdo
+    
+   posicionesParaGenerarMuros.forEach({posicion => self.dibujarBloqueVacioEn(posicion)})
+
+		
+	}
+	
 	method configurarTeclado(){
 		keyboard.c().onPressDo({aang.figth(hitDerecha)})
-		keyboard.up().onPressDo({aang.mover(arriba)})
+		keyboard.up().onPressDo({aang.mover(arribaEnEscalera)})
 		keyboard.space().onPressDo({aang.saltar()})
-		keyboard.down().onPressDo({aang.mover(abajo)})	
+		keyboard.down().onPressDo({aang.mover(abajoEnEscalera)})	
 		keyboard.right().onPressDo({aang.mover(derecha)})	
 		keyboard.left().onPressDo({aang.mover(izquierda)})
 	}
@@ -91,3 +120,4 @@ object elementos {
 		elementos.forEach({posicion =>self.agregarElemento(new Elemento(elemento= "water", position=posicion ))})
 	}
 } 
+
