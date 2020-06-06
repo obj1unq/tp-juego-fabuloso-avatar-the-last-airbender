@@ -37,6 +37,13 @@ object nivel1 {
 		self.dibujarPisos()
 		self.dibujarPlataformas()
 		self.dibujarEscalera()
+		
+		// Preguntar por rapidez de la animacion y por evolucionar a Clases
+		game.addVisual(estalactita)
+		game.addVisual(estalactita2)
+		game.onTick(5, "avanzarEstalac", {animacion.deElemento(estalactita)})
+		//
+		
 		game.addVisual(aang)
 		game.addVisual(aire)
 		game.addVisual(barraVida)

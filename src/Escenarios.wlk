@@ -2,6 +2,7 @@ import wollok.game.*
 
 import characters.*
 import movements.*
+import animations.*
 
 class Floor {
 
@@ -61,5 +62,48 @@ class BloqueVacio{
 	}
 }
 
+object estalactita{
+	const fotogramas = 10
+	
+	var property fotograma = 1
+	
+    var property position = game.at(4,4)
+	
+	method image(){
+		return "estalactita/" + fotograma + ".png"
+	}
+	
+	method avanzarAnimaciones(){
+		fotograma++
+		if(fotograma>fotogramas){
+			position = self.position().down(1)
+			fotograma = 1
+		}
+	}
+	
+	method esAtravesable(personaje){
+		return true
+	}
+
+}
+
+object estalactita2{
+
+    method position(){
+    	return estalactita.position().down(1)
+    }
+	
+	method image(){
+		return "estalactita/" + self.fotograma() + ".png"
+	}
+	
+	method fotograma(){
+		return if (estalactita.fotograma() < 6) 0 else estalactita.fotograma() * 10 
+	}
+	
+	method esAtravesable(personaje){
+		return true
+	}
+}
 
 
