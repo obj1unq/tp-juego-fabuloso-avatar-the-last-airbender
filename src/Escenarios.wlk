@@ -62,47 +62,62 @@ class BloqueVacio{
 	}
 }
 
-object estalactita{
-	const fotogramas = 10
-	
+class MovibleFluido{
 	var property fotograma = 1
 	
-    var property position = game.at(4,4)
+	var property position = game.at(0,0)
+	
 	
 	method image(){
-		return "estalactita/" + fotograma + ".png"
+		return self.nombre() + "/" + self.fotograma() + ".png"
+	}
+	
+	method fotogramas(){
+		return 10
+	}
+	
+	method nombre() // abstract
+	
+	method esAtravesable(personaje){
+		return true
 	}
 	
 	method avanzarAnimaciones(){
 		fotograma++
-		if(fotograma>fotogramas){
+		if(fotograma>self.fotogramas()){
 			position = self.position().down(1)
 			fotograma = 1
 		}
 	}
+}
+
+class Estalactita inherits MovibleFluido{
+	var posicionInicial = game.at(0,0)
 	
-	method esAtravesable(personaje){
-		return true
+	method recordarPosicionInicial(){
+		posicionInicial = self.position()	
+	}
+	
+	method regenerar(){
+		self.position(posicionInicial)
+	}
+	
+	override method nombre(){
+		return "estalactita"
 	}
 
 }
 
-object estalactita2{
+class EstalactitaEsclava inherits Estalactita{
+	
+	const estalactitaMaster
 
-    method position(){
-    	return estalactita.position().down(1)
+    override method position(){
+    	return estalactitaMaster.position().down(1)
     }
 	
-	method image(){
-		return "estalactita/" + self.fotograma() + ".png"
-	}
-	
-	method fotograma(){
-		return if (estalactita.fotograma() < 6) 0 else estalactita.fotograma() * 10 
-	}
-	
-	method esAtravesable(personaje){
-		return true
+	override method fotograma(){
+		return if (estalactitaMaster.fotograma() < 6) 0 else estalactitaMaster.fotograma() * 10 
 	}
 }
 

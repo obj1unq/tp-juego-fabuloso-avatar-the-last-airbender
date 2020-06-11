@@ -32,19 +32,27 @@ object nivel1 {
 	
 	
 	method agregarVisuales(){
+		
+		const estalactita = new Estalactita(position=game.at(4,4))
+		estalactita.recordarPosicionInicial()
+		const estalactita2 = new EstalactitaEsclava(estalactitaMaster=estalactita)
+		
+		
 		game.addVisual(board)
 		self.limitarMapa()
 		self.dibujarPisos()
 		self.dibujarPlataformas()
 		self.dibujarEscalera()
 		
-		// Preguntar por rapidez de la animacion y por evolucionar a Clases
+		// Preguntar por rapidez de la animacion, que se regenere y por evolucionar a Clases
+		
 		game.addVisual(estalactita)
 		game.addVisual(estalactita2)
-		game.onTick(5, "avanzarEstalac", {animacion.deElemento(estalactita)})
-		//
+		if(game.hasVisual(estalactita)){game.onTick(5, "avanzarEstalac", {animacion.deElemento(estalactita)})}
+		game.onCollideDo(estalactita, {otraCosa => estalactita.regenerar()})
 		
 		game.addVisual(aang)
+		//game.onTick(300, "caer", {aang.gravedad()})
 		game.addVisual(aire)
 		game.addVisual(barraVida)
 		game.addVisual(barraMana)
