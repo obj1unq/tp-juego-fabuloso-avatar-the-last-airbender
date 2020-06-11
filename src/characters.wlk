@@ -37,6 +37,13 @@ object aang{
 		self.image(direccionActual.image())
 	}
 	
+	method gravedad(){
+		if (self.puedeMover(abajo)){
+		self.position(abajo.position())
+		}
+		self.image(direccionActual.image())
+	}
+	
 	method mover(direccion){
 		if (self.puedeMover(direccion)){
 			direccionActual = direccion
