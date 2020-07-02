@@ -93,6 +93,7 @@ class MovibleFluido{
 
 class Estalactita inherits MovibleFluido{
 	var posicionInicial = game.at(0,0)
+	const property danio = 1
 	
 	method recordarPosicionInicial(){
 		posicionInicial = self.position()	
@@ -118,6 +119,9 @@ class EstalactitaEsclava inherits Estalactita{
 	
 	override method fotograma(){
 		return if (estalactitaMaster.fotograma() < 6) 0 else estalactitaMaster.fotograma() * 10 
+	}
+	method herir(personaje){
+		personaje.perderVida(danio)
 	}
 }
 

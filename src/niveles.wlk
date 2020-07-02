@@ -18,7 +18,7 @@ object nivel1 {
 		elementos.agregarElementos()
 		
 		//TODO: Buscarle lugar a las colisiones
-		
+		game.onTick(1*500,"gravedad",{aang.gravedad()})
 		game.onTick(3*1000, "regeneracionMana",{ aang.aumentarEnergia()})
 	}
 	
@@ -50,9 +50,11 @@ object nivel1 {
 		game.addVisual(estalactita2)
 		if(game.hasVisual(estalactita)){game.onTick(5, "avanzarEstalac", {animacion.deElemento(estalactita)})}
 		game.onCollideDo(estalactita, {otraCosa => estalactita.regenerar()})
+	
 		
 		game.addVisual(aang)
 		//game.onTick(300, "caer", {aang.gravedad()})
+		game.onCollideDo(aang,{estalactita => estalactita2.herir(aang)})
 		game.addVisual(aire)
 		game.addVisual(barraVida)
 		game.addVisual(barraMana)

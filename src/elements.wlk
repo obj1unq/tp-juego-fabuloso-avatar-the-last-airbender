@@ -60,9 +60,9 @@ object barraVida{
 	var property barraVida = 6
 	method position(){return game.at(1,8)}
 	method image()="vida/"+ barraVida.toString()+".png"
-	method descontarBarra(){
+	method descontarBarra(vidaAPerder){
 		if (barraVida == 0){game.stop()}
-		else {barraVida -=1}
+		else {barraVida -=vidaAPerder}
 	}
 	method aumentarBarra(){barraVida += 1}
 	

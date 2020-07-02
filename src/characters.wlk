@@ -38,7 +38,7 @@ object aang{
 	}
 	
 	method gravedad(){
-		if (self.puedeMover(abajo)){
+		if (self.puedeMover(abajo) and !self.abajoHayEscalera()){
 		self.position(abajo.position())
 		}
 		self.image(direccionActual.image())
@@ -71,10 +71,10 @@ object aang{
 		energia += 1
 		barraMana.aumentarBarra()}
 	}
-	method perderVida(){
+	method perderVida(vidaAPerder){
 		if(self.vida() > 0){
-			vida -= 1
-			barraVida.descontarBarra()
+			vida -= vidaAPerder
+			barraVida.descontarBarra(vidaAPerder)
 		}else {game.stop()}
 	}
 	method aumentarVida(){
