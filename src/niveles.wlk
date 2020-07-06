@@ -23,14 +23,6 @@ object nivel1 {
 	}
 	
 	
-		
-		  
-		/*const awita = new Elemento(elemento="water")
-		game.onTick(130, "avanzarAang", {animacion.deElemento(awita)})
-		game.addVisualIn(awita, game.at(3,1))
-		game.onCollideDo(awita,{personaje =>personaje.guardar(awita)})*/
-	
-	
 	method agregarVisuales(){
 		
 		const estalactita = new Estalactita(position=game.at(4,4))
@@ -52,6 +44,8 @@ object nivel1 {
 		game.onCollideDo(estalactita, {otraCosa => estalactita.regenerar()})
 		
 		game.addVisual(aang)
+		//game.addVisual(enemigo)
+		//game.onTick(500, "enemigo", {enemigo.mover(enemigo.direccionActual())})
 		//game.onTick(300, "caer", {aang.gravedad()})
 		game.addVisual(aire)
 		game.addVisual(barraVida)
@@ -110,12 +104,16 @@ object nivel1 {
 	}
 	
 	method configurarTeclado(){
+		
+//		const derechaAang = new Movimiento(direccion=derecha, fotogramas= 9, personaje=aang, position=aang.position().right(1))
+		const izquierdaAang = new Movimiento(direccion=izquierda, fotogramas= 9, personaje=aang, position=aang.position().left(1))
+		
 		keyboard.c().onPressDo({aang.figth(hitDerecha)})
 		keyboard.up().onPressDo({aang.mover(arribaEnEscalera)})
 		keyboard.space().onPressDo({aang.saltar()})
 		keyboard.down().onPressDo({aang.mover(abajoEnEscalera)})	
-		keyboard.right().onPressDo({aang.mover(derecha)})	
-		keyboard.left().onPressDo({aang.mover(izquierda)})
+		keyboard.right().onPressDo({aang.mover(new Movimiento(direccion=derecha, fotogramas= 9, personaje=aang, position=aang.position().right(1)))})	
+		keyboard.left().onPressDo({aang.mover(izquierdaAang)})
 	}
 	
 	
