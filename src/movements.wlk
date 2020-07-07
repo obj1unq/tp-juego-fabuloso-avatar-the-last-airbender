@@ -9,10 +9,8 @@ class Movimiento {
 	const personaje
 
 	method siguientePosicion(){
-		return direccion.posicion(personaje.position())
+		return direccion.posicion(personaje)
 	}
-
-	method direccionOpuesta() = direccion.direccionOpuesta() //
 
 	method hit() = direccion.hit()
 
@@ -33,7 +31,7 @@ class Movimiento {
 
 object derecha {
 	
-	method posicion(posicion) = posicion.right(1)
+	method posicion(personaje) = personaje.position().right(1)
 
 	method nombre() = "toRight"
 
@@ -47,7 +45,7 @@ object derecha {
 
 object izquierda {
 
-	method posicion(posicion) = posicion.left(1)
+	method posicion(personaje) = personaje.position().left(1)
 	
 	method nombre() = "toLeft"
 
@@ -59,110 +57,44 @@ object izquierda {
 
 }
 
-object abajo {
-
-	method posicion(posicion) = posicion.down(1)
+object arribaEnEscalera {
 	
-	method nombre() = "toBottom"
-
-	method direccionOpuesta() = arriba
-
-	method hit() = hitIzquierda
-
-	method salto() = saltoDesdeDerecha	
-	
-	
-}
-
-object arriba {
-
-	method posicion(posicion) = posicion.up(1)
+	method posicion(personaje){
+		return if (personaje.estaSobreEscalera()) {
+			personaje.position().up(1)
+		} else {
+			personaje.position().up(0)
+		}
+	}
 	
 	method nombre() = "toTop"
-
-	method direccionOpuesta() = abajo
+	
+	method direccionOpuesta() = abajoEnEscalera
 
 	method hit() = hitIzquierda
 
 	method salto() = saltoDesdeDerecha	
 	
-}
-
-object arribaEnEscalera {
-
-	var animacion = 1
-	const fotogramas = 9
-	const reiniciar = 1
-
-	method image() {
-		return "aang__movement/toTop/" + animacion + ".png"
-	}
-
-	method position() {
-		return if (aang.estaSobreEscalera()) {
-			aang.position().up(1)
-		} else {
-			aang.position().up(0)
-		}
-	}
-
-	method direccionOpuesta() {
-		return abajo
-	}
-
-	method salto() {
-		return saltoDesdeIzquierda
-	}
-
-	method hit() {
-		return hitDerecha
-	}
-
-	method avanzarAnimaciones() {
-		animacion++
-		if (animacion > fotogramas) {
-			animacion = reiniciar
-		}
-	}
-
 }
 
 object abajoEnEscalera {
-
-	const property direccionOpuesta = arriba
-	var property animacion = 1
-
-	method image() {
-		return "aang__movement/toBottom/" + animacion.toString() + ".png"
-	}
-
-	method position() {
-		return if (aang.estaSobreEscalera() or aang.abajoHayEscalera()) {
-			aang.position().down(1)
+	
+	method posicion(personaje){
+		return if (personaje.estaSobreEscalera() or personaje.abajoHayEscalera()) {
+			personaje.position().down(1)
 		} else {
-			aang.position().down(0)
+			personaje.position().down(0)
 		}
 	}
+	
+	method nombre() = "toBottom"
 
-	method avanzarAnimaciones() {
-		animacion++
-		if (animacion > 9) {
-			animacion = 1
-		}
-	}
+	method direccionOpuesta() = arribaEnEscalera
 
-	method imagenSiguiente() {
-		return self.image()
-	}
+	method hit() = hitIzquierda
 
-	method salto() {
-		return saltoDesdeIzquierda
-	}
-
-	method hit() {
-		return hitDerecha
-	}
-
+	method salto() = saltoDesdeDerecha	
+	
 }
 
 object hitIzquierda {
@@ -172,7 +104,7 @@ object hitIzquierda {
 	const property energiaAPerder = 1
 
 	method image() {
-		return "fight/toLeft/" + animacion.toString() + ".png"
+		return "fight/toLeft/" + animacion.toString() + ".png" //aang__movement/fight/toLeft/
 	}
 
 	method avanzarAnimaciones() {
@@ -258,136 +190,3 @@ object saltoDesdeIzquierda {
 	}
 
 }
-
-/*object arriba {
-
- * 	var animacion = 1
- * 	const fotogramas = 9
- * 	const reiniciar = 1
-
- * 	method image() {
- * 		return "aang__movement/toTop/" + animacion + ".png"
- * 	}
-
- * 	method position() {
- * 		return aang.position().up(1)
- * 	}
-
- * 	method direccionOpuesta() {
- * 		return abajo
- * 	}
-
- * 	method salto() {
- * 		return saltoDesdeIzquierda
- * 	}
-
- * 	method hit() {
- * 		return hitDerecha
- * 	}
-
- * 	method avanzarAnimaciones() {
- * 		animacion++
- * 		if (animacion > fotogramas) {
- * 			animacion = reiniciar
- * 		}
- * 	}
-
- * }
-
- * object izquierda {
-
- * 	const property direccionOpuesta = derecha
- * 	var property animacion = 1
-
- * 	method image() {
- * 		return "aang__movement/toLeft/" + animacion.toString() + ".png"
- * 	}
-
- * 	method position() = aang.position().left(1)
-
- * 	method avanzarAnimaciones() {
- * 		animacion++
- * 		if (animacion > 4) {
- * 			animacion = 1
- * 		}
- * 	}
-
- * 	method imagenSiguiente() {
- * 		return self.image()
- * 	}
-
- * 	method salto() {
- * 		return saltoDesdeDerecha
- * 	}
-
- * 	method hit() {
- * 		return hitIzquierda
- * 	}
-
- * }
-
- * object abajo {
-
- * 	const property direccionOpuesta = arriba
- * 	var property animacion = 1
-
- * 	method image() {
- * 		return "aang__movement/toBottom/" + animacion.toString() + ".png"
- * 	}
-
- * 	method position() = aang.position().down(1)
-
- * 	method avanzarAnimaciones() {
- * 		animacion++
- * 		if (animacion > 9) {
- * 			animacion = 1
- * 		}
- * 	}
-
- * 	method imagenSiguiente() {
- * 		return self.image()
- * 	}
-
- * 	method salto() {
- * 		return saltoDesdeIzquierda
- * 	}
-
- * 	method hit() {
- * 		return hitDerecha
- * 	}
-
- * }
-
- * object derecha {
-
- * 	const property direccionOpuesta = izquierda
- * 	var property animacion = 1
-
- * 	method image() {
- * 		return "aang__movement/toRight/" + animacion + ".png"
- * 	}
-
- * 	method position() = aang.position().right(1)
-
- * 	method avanzarAnimaciones() {
- * 		animacion++
- * 		if (animacion > 4) {
- * 			animacion = 1
- * 		}
- * 	}
-
- * 	method imagenSiguiente() {
- * 		return self.image()
- * 	}
-
- * 	method salto() {
- * 		return saltoDesdeIzquierda
- * 	}
-
- * 	method hit() {
- * 		return hitDerecha
- * 	}
-
- * }
-
- */
