@@ -4,13 +4,15 @@ import characters.*
 class Movimiento {
 
 	var animacion = 1
-	const direccion
+	var property direccion
 	const fotogramas
 	const personaje
-	
-	const property position
 
-	method direccionOpuesta() = direccion.direccionOpuesta()
+	method siguientePosicion(){
+		return direccion.posicion(personaje.position())
+	}
+
+	method direccionOpuesta() = direccion.direccionOpuesta() //
 
 	method hit() = direccion.hit()
 
@@ -30,6 +32,8 @@ class Movimiento {
 }
 
 object derecha {
+	
+	method posicion(posicion) = posicion.right(1)
 
 	method nombre() = "toRight"
 
@@ -43,6 +47,8 @@ object derecha {
 
 object izquierda {
 
+	method posicion(posicion) = posicion.left(1)
+	
 	method nombre() = "toLeft"
 
 	method direccionOpuesta() = derecha
@@ -55,6 +61,8 @@ object izquierda {
 
 object abajo {
 
+	method posicion(posicion) = posicion.down(1)
+	
 	method nombre() = "toBottom"
 
 	method direccionOpuesta() = arriba
@@ -68,6 +76,8 @@ object abajo {
 
 object arriba {
 
+	method posicion(posicion) = posicion.up(1)
+	
 	method nombre() = "toTop"
 
 	method direccionOpuesta() = abajo

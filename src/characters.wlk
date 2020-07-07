@@ -6,74 +6,66 @@ import Escenarios.*
 
 class Personaje {
 	
-	method image()
+	var property position 
 	
-	method nombre()
+	var nombre
 	
-	method mover()
+	var property movimiento 
+	
+	method image(){
+		return movimiento.image()
+	}
+	
+	method nombre(){
+		return nombre
+	}
+	
+	method mover(direccion){
+		if (self.puedeMover(direccion)){
+			movimiento.direccion(direccion)
+			movimiento.avanzarAnimaciones()
+			self.position(movimiento.siguientePosicion())
+		}
+		
+	}
 	
 	method puedeMover(direccion)
+	
 	
 }
 
 
 class Enemigo inherits Personaje{
 	
-	
-	
-}
+	override method initialize(){
+		movimiento = new Movimiento(direccion=derecha, fotogramas= 4, personaje=self)
+		position = game.at(7,5)
+		nombre = "enemy"
+	}
 
-object enemigo{
-	
-	var property position = game.at(7,5)
-	
-//	var property direccionActual
-	
-	method image(){
-		
-		return "Stage/Escalera.png" //direccionActual.image()
-		
+	override method puedeMover(direccion){
+		const direccionAEvaluar = game.getObjectsIn(direccion.posicion(self.position()).down(1))
+		return  not direccionAEvaluar.isEmpty()
 	}
 	
-	method nombre(){
-		
-		return "enemy"
-		
-	}
-	
-	method mover(_direccion){
-		
-		/*if (self.puedeMover(_direccion)){
-			
-			direccionActual = _direccion
+	override method mover(direccion){
+		if (self.puedeMover(direccion)){
+			movimiento.direccion(direccion)
 		}
-		
-		else {
-			
-			direccionActual = _direccion.direccionOpuesta()
-			
-		}*/
-			
-			self.position(direccionActual.position())
-			
-			//direccionActual.avanzarAnimaciones()
-	}
-	
-	method puedeMover(_direccion){
-		
-		const objeto = game.getObjectsIn(_direccion.position())
-		
-		return not objeto.isEmpty()
-		
+		else{
+			movimiento.direccion(direccion.direccionOpuesta())
+		}
+		movimiento.avanzarAnimaciones()
+		self.position(movimiento.siguientePosicion())
 	}
 }
 
 object aang{
 	var property position = game.at(1,5)
-	const derechaAang = new Movimiento(direccion=derecha, fotogramas= 9, personaje=self, position=self.position().right(1))
+	const movimiento = new Movimiento(direccion=derecha, fotogramas= 4, personaje=self)
 	var property vida = 6
 	var property energia = 7
-	var property direccionActual = derechaAang
+//	var property direccionActual = movimient
 	//var property image =
 	
 	method nombre(){
@@ -81,7 +73,7 @@ object aang{
 	}
 	
 	method image(){
-		return direccionActual.image()
+		return movimiento.image()
 	}  
 	
 	/*method saltar(){
@@ -90,14 +82,14 @@ object aang{
 		game.onTick(500, "saltar", {self.caer()})
 	}*/
 	
-	method saltar(){
-		const direccionPreviaAlSalto = direccionActual 
-		self.direccionActual(direccionActual.salto()) 
-		game.onTick(10, "salto", {direccionActual.avanzarAnimaciones()})
-		self.position(arriba.position())
-		game.onTick(500, "saltar", {self.caer()})
-		direccionActual = direccionPreviaAlSalto
-	}
+//	method saltar(){
+//		const direccionPreviaAlSalto = direccionActual 
+//		self.direccionActual(direccionActual.salto()) 
+//		game.onTick(10, "salto", {direccionActual.avanzarAnimaciones()})
+//		self.position(arriba.position())
+//		game.onTick(500, "saltar", {self.caer()})
+//		direccionActual = direccionPreviaAlSalto
+//	}
 	
 	method guardar(elemento){
 		scoreUnidad.aumentar()
@@ -111,31 +103,27 @@ object aang{
 		return game.getObjectsIn(self.position().down(1)).any({i => i.image() == "Stage/Escalera.png"or i.image()=="Stage/Escalera-Base.png"})
 	}
 	method caer(){
-		if (self.puedeMover(abajo)){
-		self.position(abajo.position())
-		}
+		self.gravedad()
 		game.removeTickEvent("saltar")
 		game.removeTickEvent("salto")
-		//self.image(direccionActual.image())
 	}
 	
 	method gravedad(){
 		if (self.puedeMover(abajo)){
-		self.position(abajo.position())
+			self.position(self.position().down(1))
 		}
-		//self.image(direccionActual.image())
 	}
 	
 	method mover(direccion){
-		//if (self.puedeMover(direccion)){
-			direccionActual = direccion
-			self.position(direccion.position())
-			direccion.avanzarAnimaciones()
-		//}
+		if (self.puedeMover(direccion)){
+			movimiento.direccion(direccion)
+			movimiento.avanzarAnimaciones()
+			self.position(movimiento.siguientePosicion())
+		}
 		
 	}
 	method puedeMover(direccion){
-		const objeto = game.getObjectsIn(direccion.position())
+		const objeto = game.getObjectsIn(direccion.posicion(self.position()))
 		return  objeto.isEmpty() or objeto.head().esAtravesable(self)
 	}
 	
@@ -170,7 +158,7 @@ object aang{
 	}
 	method figth(tipoDePelea){
 		self.perderEnergia(tipoDePelea.energiaAPerder())
-		game.onTick(100,"golpe",{animacion.dePersonaje(self, direccionActual.hit())})
+		game.onTick(100,"golpe",{animacion.dePersonaje(self, movimiento.hit())})
 		
 	}
 }	

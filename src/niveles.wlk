@@ -42,10 +42,10 @@ object nivel1 {
 		game.addVisual(estalactita2)
 		if(game.hasVisual(estalactita)){game.onTick(5, "avanzarEstalac", {animacion.deElemento(estalactita)})}
 		game.onCollideDo(estalactita, {otraCosa => estalactita.regenerar()})
-		
+		const enemigardo = new Enemigo()
 		game.addVisual(aang)
-		//game.addVisual(enemigo)
-		//game.onTick(500, "enemigo", {enemigo.mover(enemigo.direccionActual())})
+		game.addVisual(enemigardo)
+		game.onTick(300, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
 		//game.onTick(300, "caer", {aang.gravedad()})
 		game.addVisual(aire)
 		game.addVisual(barraVida)
@@ -105,15 +105,12 @@ object nivel1 {
 	
 	method configurarTeclado(){
 		
-//		const derechaAang = new Movimiento(direccion=derecha, fotogramas= 9, personaje=aang, position=aang.position().right(1))
-		const izquierdaAang = new Movimiento(direccion=izquierda, fotogramas= 9, personaje=aang, position=aang.position().left(1))
-		
 		keyboard.c().onPressDo({aang.figth(hitDerecha)})
 		keyboard.up().onPressDo({aang.mover(arribaEnEscalera)})
-		keyboard.space().onPressDo({aang.saltar()})
+		//keyboard.space().onPressDo({aang.saltar()})
 		keyboard.down().onPressDo({aang.mover(abajoEnEscalera)})	
-		keyboard.right().onPressDo({aang.mover(new Movimiento(direccion=derecha, fotogramas= 9, personaje=aang, position=aang.position().right(1)))})	
-		keyboard.left().onPressDo({aang.mover(izquierdaAang)})
+		keyboard.right().onPressDo({aang.mover(derecha)})	
+		keyboard.left().onPressDo({aang.mover(izquierda)})
 	}
 	
 	
