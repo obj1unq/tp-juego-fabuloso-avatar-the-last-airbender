@@ -26,11 +26,12 @@ class Personaje {
 		}
 	}
 
-	method puedeMover(direccion) {
-		const objeto = game.getObjectsIn(direccion.posicion(self))
-		return objeto.isEmpty() or objeto.head().esAtravesable(self)
+
+	method esAtravesable(personaje) {
+		return false
 	}
 
+	method puedeMover(direccion)
 }
 
 class Enemigo inherits Personaje {
@@ -60,6 +61,9 @@ class Enemigo inherits Personaje {
 
 object aang inherits Personaje {
 
+	const pelea = new Hit(direccion = hitDerecha, fotogramas = 5, personaje = self)
+	const salto = new Salto(direccion = saltoDesdeDerecha, fotogramas = 4, personaje = self)
+	var movimientoAnterior = null
 	var property vida = 6
 	var property energia = 7
 
@@ -69,11 +73,14 @@ object aang inherits Personaje {
 		position = game.at(1, 5)
 	}
 
-	/*method saltar(){
-	 * 	game.onTick(100, "salto", {animacion.dePersonaje(self, direccionActual.salto())})
-	 * 	self.position(arriba.position())
-	 * 	game.onTick(500, "saltar", {self.caer()})
-	 }*/
+	method saltar(){
+		movimientoAnterior = movimiento
+		salto.direccion(movimiento.salto())
+		movimiento = salto
+	  	game.onTick(100, "salto", {animacion.dePersonaje(self, movimiento)})
+	  	self.position(self.position().up(1))
+	  	//game.onTick(500, "saltar", {self.caer()})
+	 }
 //	method saltar(){
 //		const direccionPreviaAlSalto = direccionActual 
 //		self.direccionActual(direccionActual.salto()) 
@@ -96,13 +103,15 @@ object aang inherits Personaje {
 	}
 
 	method caer() {
+		self.volverAlMovimientoAnterior()
 		self.gravedad()
-		game.removeTickEvent("saltar")
+		//game.removeTickEvent("saltar")
 		game.removeTickEvent("salto")
+		
 	}
 
 	method gravedad() {
-		if (self.puedeMover(abajo)) { //TODO: explicitar
+		if (self.puedeMover(abajo)) {
 			self.position(self.position().down(1))
 		}
 	}
@@ -121,6 +130,10 @@ object aang inherits Personaje {
 		}
 	}
 
+	method volverAlMovimientoAnterior() {
+		movimiento = movimientoAnterior
+	}
+
 	method perderVida() {
 		if (self.vida() > 0) {
 			vida -= 1
@@ -137,14 +150,21 @@ object aang inherits Personaje {
 		}
 	}
 
-	method esAtravesable(personaje) {
-		return false
+	method figth() {
+		if (not movimiento.esDePelea()) {
+			movimientoAnterior = movimiento
+			self.perderEnergia(pelea.energiaAPerder())
+			pelea.direccion(movimiento.hit())
+			movimiento = pelea
+			game.onTick(100, "golpe", { animacion.dePersonaje(self, movimiento)})
+		}
+	}
+	
+	override method puedeMover(direccion) {
+		const objeto = game.getObjectsIn(direccion.posicion(self))
+		return (objeto.isEmpty() or objeto.head().esAtravesable(self)) and not movimiento.esDePelea()
 	}
 
-	method figth(tipoDePelea) {
-		self.perderEnergia(tipoDePelea.energiaAPerder())
-		game.onTick(100, "golpe", { animacion.dePersonaje(self, movimiento.hit())})
-	}
 
 }
 

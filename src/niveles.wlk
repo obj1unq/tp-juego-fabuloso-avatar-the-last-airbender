@@ -105,9 +105,9 @@ object nivel1 {
 	
 	method configurarTeclado(){
 		
-		keyboard.c().onPressDo({aang.figth(hitDerecha)})
+		keyboard.c().onPressDo({aang.figth()})
 		keyboard.up().onPressDo({aang.mover(arribaEnEscalera)})
-		//keyboard.space().onPressDo({aang.saltar()})
+		keyboard.space().onPressDo({aang.saltar()})
 		keyboard.down().onPressDo({aang.mover(abajoEnEscalera)})	
 		keyboard.right().onPressDo({aang.mover(derecha)})	
 		keyboard.left().onPressDo({aang.mover(izquierda)})

@@ -5,7 +5,7 @@ class Movimiento {
 
 	var animacion = 1
 	var property direccion
-	const fotogramas
+	var fotogramas
 	const personaje
 
 	method siguientePosicion(){
@@ -25,6 +25,10 @@ class Movimiento {
 		if (animacion > fotogramas) {
 			animacion = 1
 		}
+	}
+	
+	method esDePelea(){
+		return direccion == hitIzquierda or direccion == hitDerecha
 	}
 
 }
@@ -77,6 +81,14 @@ object arribaEnEscalera {
 	
 }
 
+object abajo {
+	
+	method posicion(personaje){
+		return personaje.position().down(1)
+	}
+	
+}
+
 object abajoEnEscalera {
 	
 	method posicion(personaje){
@@ -97,96 +109,54 @@ object abajoEnEscalera {
 	
 }
 
-object hitIzquierda {
-
-	var property animacion = 1
+class Hit inherits Movimiento{
+	
 	const property danio = 2
+	
 	const property energiaAPerder = 1
-
-	method image() {
-		return "fight/toLeft/" + animacion.toString() + ".png" //aang__movement/fight/toLeft/
-	}
-
-	method avanzarAnimaciones() {
-		if (animacion < 6) {
-			animacion++
-			1
-		} else {
-			game.removeTickEvent("golpe")
+	
+	override method avanzarAnimaciones(){
+		animacion++
+		if (animacion > fotogramas) {
 			animacion = 1
+			personaje.volverAlMovimientoAnterior()
+			game.removeTickEvent("golpe")
 		}
 	}
-
-	method imagenSiguiente() {
-		return self.image()
-	}
-
+	
 }
 
-object hitDerecha {
+object hitIzquierda inherits Hit {
+	
+	method nombre() = "fight/toLeft"
+	
+}
 
-	const property danio = 2
-	var property animacion = 1
-	const property energiaAPerder = 1
+object hitDerecha inherits Hit {
+	
+	method nombre() = "fight/toRight"
+	
+}
 
-	method image() {
-		return "fight/toRight/" + animacion.toString() + ".png"
-	}
+class Salto inherits Movimiento {
 
-	method avanzarAnimaciones() {
-		if (animacion < 6) {
-			animacion++
-			1
-		} else {
-			game.removeTickEvent("golpe")
+	override method avanzarAnimaciones(){
+		animacion++
+		if (animacion > fotogramas) {
 			animacion = 1
+			personaje.caer()
 		}
 	}
-
-	method imagenSiguiente() {
-		return self.image()
-	}
-
+	
 }
 
 object saltoDesdeDerecha {
-
-	var property animacion = 1
-
-	method image() {
-		return "aang__movement/jump/fromLeft/" + animacion.toString() + ".png"
-	}
-
-	method avanzarAnimaciones() {
-		animacion++
-		if (animacion > 4) {
-			animacion = 1
-		}
-	}
-
-	method imagenSiguiente() {
-		return self.image()
-	}
-
+		
+		method nombre() = "jump/fromLeft"
 }
 
 object saltoDesdeIzquierda {
-
-	var property animacion = 1
-
-	method image() {
-		return "aang__movement/jump/fromRight/" + animacion.toString() + ".png"
-	}
-
-	method avanzarAnimaciones() {
-		animacion++
-		if (animacion > 4) {
-			animacion = 1
-		}
-	}
-
-	method imagenSiguiente() {
-		return self.image()
-	}
-
+	
+		method nombre() = "jump/fromRight"
+	
 }
