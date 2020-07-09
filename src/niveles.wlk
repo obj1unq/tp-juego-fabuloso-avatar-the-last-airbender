@@ -9,8 +9,7 @@ import wollok.game.Position
 
 object nivel1 {
 	const board = new BoardGround(image="Stage/Background-Stage1.jpg")
-	
-	
+	const enemigardo = new Enemigo()
 	
 	method empezar(){
 		self.agregarVisuales()
@@ -43,7 +42,7 @@ object nivel1 {
 		game.addVisual(estalactita2)
 		if(game.hasVisual(estalactita)){game.onTick(5, "avanzarEstalac", {animacion.deElemento(estalactita)})}
 		game.onCollideDo(estalactita, {otraCosa => estalactita.regenerar()})
-		const enemigardo = new Enemigo()
+		//const enemigardo = new Enemigo()
 		game.addVisual(aang)
 		game.addVisual(enemigardo)
 		game.onTick(300, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
@@ -115,7 +114,7 @@ object nivel1 {
 		keyboard.down().onPressDo({aang.mover(abajoEnEscalera)})	
 		keyboard.right().onPressDo({aang.mover(derecha)})	
 		keyboard.left().onPressDo({aang.mover(izquierda)})
-	}
+		}
 	
 	
 }

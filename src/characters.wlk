@@ -3,12 +3,15 @@ import animations.*
 import elements.*
 import movements.*
 import Escenarios.*
+import niveles.*
+import juego.*
 
 class Personaje {
 
 	var property position
 	var nombre
 	var property movimiento
+	var property vida
 
 	method image() {
 		return movimiento.image()
@@ -25,6 +28,14 @@ class Personaje {
 			self.position(movimiento.siguientePosicion())
 		}
 	}
+	method perderVida() {
+		if (self.vida() > 0) {
+			vida -= 1
+			barraVida.descontarBarra()
+		} else {
+			self.morir()
+		}
+	}
 
 
 	method esAtravesable(personaje) {
@@ -32,6 +43,8 @@ class Personaje {
 	}
 
 	method puedeMover(direccion)
+	method morir()
+	method atacar(personaje)
 }
 
 class Enemigo inherits Personaje {
@@ -40,6 +53,7 @@ class Enemigo inherits Personaje {
 		movimiento = new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)
 		position = game.at(7, 5)
 		nombre = "enemy"
+		vida = 3
 	}
 
 	override method puedeMover(direccion) {
@@ -56,8 +70,11 @@ class Enemigo inherits Personaje {
 		movimiento.avanzarAnimaciones()
 		self.position(movimiento.siguientePosicion())
 	}
-		method atacar(personaje){
+		override method atacar(personaje){
 			personaje.perderVida()
+		}
+		override method morir(){
+			game.removeVisual(self)
 		}
 
 }
@@ -67,13 +84,14 @@ object aang inherits Personaje {
 	const pelea = new Hit(direccion = hitDerecha, fotogramas = 5, personaje = self)
 	const salto = new Salto(direccion = saltoDesdeDerecha, fotogramas = 4, personaje = self)
 	var movimientoAnterior = null
-	var property vida = 6
+	//var property vida = 6
 	var property energia = 7
 
 	override method initialize() {
 		nombre = "aang"
 		movimiento = new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)
 		position = game.at(1, 5)
+		vida = 6
 	}
 
 	method saltar(){
@@ -137,14 +155,6 @@ object aang inherits Personaje {
 		movimiento = movimientoAnterior
 	}
 
-	method perderVida() {
-		if (self.vida() > 0) {
-			vida -= 1
-			barraVida.descontarBarra()
-		} else {
-			game.stop()
-		}
-	}
 
 	method aumentarVida() {
 		if (self.vida() < 6) {
@@ -167,7 +177,15 @@ object aang inherits Personaje {
 		const objeto = game.getObjectsIn(direccion.posicion(self))
 		return (objeto.isEmpty() or objeto.head().esAtravesable(self)) and not movimiento.esDePelea()
 	}
-
-
+	override method morir(){
+		const boardMuerte = new BoardGround(image="aangMorido.png")
+			game.clear()
+			game.addVisual(boardMuerte)
+			//game.schedule(10*1000,game.addVisual(boardMuerte))
+			//game.stop()
+			
+		}
+	
+	override method atacar(enemigo){}
 }
 

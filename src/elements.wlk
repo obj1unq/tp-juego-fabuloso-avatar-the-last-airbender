@@ -17,7 +17,9 @@ class Elemento{
 	}
 	method esAtravesable(personaje){
 	return true
-} 
+	} 
+	method atacar(personaje) {}
+
 }
 
 
