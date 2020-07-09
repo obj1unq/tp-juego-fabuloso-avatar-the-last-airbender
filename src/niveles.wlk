@@ -20,6 +20,7 @@ object nivel1 {
 		//TODO: Buscarle lugar a las colisiones
 		
 		game.onTick(3*1000, "regeneracionMana",{ aang.aumentarEnergia()})
+		game.onTick(1*500,"gravedad",{aang.gravedad()})
 	}
 	
 	
@@ -46,6 +47,9 @@ object nivel1 {
 		game.addVisual(aang)
 		game.addVisual(enemigardo)
 		game.onTick(300, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
+		game.onCollideDo(enemigardo, {personaje => enemigardo.atacar(aang)})
+		game.onCollideDo(aang,{estalactita2 => estalactita2.atacar(aang)})
+		
 		//game.onTick(300, "caer", {aang.gravedad()})
 		game.addVisual(aire)
 		game.addVisual(barraVida)

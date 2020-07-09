@@ -20,7 +20,7 @@ test "Aang se mueve y cambia de posicion"{
 }
 test "Aang pelea y pierde energia"{
 	aang.energia(7)
-	aang.figth(hitIzquierda)
+	aang.figth()
 	assert.that(aang.energia()==6)
 }
 test "Aang pierde vida"{

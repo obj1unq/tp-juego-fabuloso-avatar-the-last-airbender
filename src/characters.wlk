@@ -56,6 +56,9 @@ class Enemigo inherits Personaje {
 		movimiento.avanzarAnimaciones()
 		self.position(movimiento.siguientePosicion())
 	}
+		method atacar(personaje){
+			personaje.perderVida()
+		}
 
 }
 
@@ -77,7 +80,7 @@ object aang inherits Personaje {
 		movimientoAnterior = movimiento
 		salto.direccion(movimiento.salto())
 		movimiento = salto
-	  	game.onTick(100, "salto", {animacion.dePersonaje(self, movimiento)})
+	  	game.onTick(100, "salt", {animacion.dePersonaje(self, movimiento)})
 	  	self.position(self.position().up(1))
 	  	//game.onTick(500, "saltar", {self.caer()})
 	 }
@@ -106,12 +109,12 @@ object aang inherits Personaje {
 		self.volverAlMovimientoAnterior()
 		self.gravedad()
 		//game.removeTickEvent("saltar")
-		game.removeTickEvent("salto")
+		game.removeTickEvent("salt")
 		
 	}
 
 	method gravedad() {
-		if (self.puedeMover(abajo)) {
+		if (self.puedeMover(abajo) and !self.abajoHayEscalera()) {
 			self.position(self.position().down(1))
 		}
 	}

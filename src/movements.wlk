@@ -139,7 +139,7 @@ object hitDerecha inherits Hit {
 }
 
 class Salto inherits Movimiento {
-
+ 
 	override method avanzarAnimaciones(){
 		animacion++
 		if (animacion > fotogramas) {
@@ -153,10 +153,12 @@ class Salto inherits Movimiento {
 object saltoDesdeDerecha {
 		
 		method nombre() = "jump/fromLeft"
+		method salto() = self
 }
 
 object saltoDesdeIzquierda {
 	
 		method nombre() = "jump/fromRight"
+		method salto() = self
 	
 }
