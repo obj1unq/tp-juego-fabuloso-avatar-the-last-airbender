@@ -179,7 +179,7 @@ object aang inherits Personaje {
 			self.perderEnergia(pelea.energiaAPerder())
 			pelea.direccion(movimiento.hit())
 			movimiento = pelea
-			self.atacar(self.enemigoAlLado())
+			//self.atacar(self.enemigoAlLado())
 			game.onTick(100, "golpe", { animacion.dePersonaje(self, movimiento)})
 		}
 	}

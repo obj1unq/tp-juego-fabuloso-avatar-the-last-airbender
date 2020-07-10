@@ -46,8 +46,8 @@ object nivel1 {
 		//const enemigardo = new Enemigo()
 		game.addVisual(aang)
 		game.addVisual(enemigardo)
-		//game.onTick(3000, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
-		//game.onCollideDo(enemigardo, {personaje => enemigardo.atacar(aang)})
+		game.onTick(3000, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
+		game.onCollideDo(enemigardo, {personaje => enemigardo.atacar(aang)})
 		game.onCollideDo(aang,{estalactita2 => estalactita2.atacar(aang)})
 		
 		//game.onTick(300, "caer", {aang.gravedad()})
