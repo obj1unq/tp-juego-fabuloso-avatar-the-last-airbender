@@ -17,7 +17,7 @@ test "La barra de Mana sube si la energia de aang sube" {
 }
 test "La barra de vida baja si aang pierde vida"{
 	aang.vida(6)
-	aang.perderVida()
+	aang.perderVida(1)
 	assert.that(barraVida.barraVida() ==5)
 }
 test "La barra de vida sube si aang gana vida"{

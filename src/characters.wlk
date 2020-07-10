@@ -28,9 +28,9 @@ class Personaje {
 			self.position(movimiento.siguientePosicion())
 		}
 	}
-	method perderVida() {
+	method perderVida(vidaAPerder) {
 		if (self.vida() > 0) {
-			vida -= 1
+			vida -= vidaAPerder
 			barraVida.descontarBarra()
 		} else {
 			self.morir()
@@ -48,13 +48,14 @@ class Personaje {
 }
 
 class Enemigo inherits Personaje {
-
+	const danio = 1
+	
 	override method initialize() {
 		movimiento = new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)
 		position = game.at(7, 5)
 		nombre = "enemy"
-		vida = 3
-	}
+		vida = 1
+		}
 
 	override method puedeMover(direccion) {
 		const direccionAEvaluar = game.getObjectsIn(direccion.posicion(self).down(1))
@@ -71,10 +72,19 @@ class Enemigo inherits Personaje {
 		self.position(movimiento.siguientePosicion())
 	}
 		override method atacar(personaje){
-			personaje.perderVida()
+			personaje.perderVida(danio)
 		}
 		override method morir(){
 			game.removeVisual(self)
+		}
+		method alLadoDeAang(){
+			return self.aangALaDerecha() or self.aangALaIzquierda()
+		}
+		method aangALaDerecha(){
+			return self.position().right(1) == aang.position()
+		}
+		method aangALaIzquierda(){
+			return self.position().left(1) == aang.position()
 		}
 
 }
@@ -84,14 +94,14 @@ object aang inherits Personaje {
 	const pelea = new Hit(direccion = hitDerecha, fotogramas = 5, personaje = self)
 	const salto = new Salto(direccion = saltoDesdeDerecha, fotogramas = 4, personaje = self)
 	var movimientoAnterior = null
-	//var property vida = 6
 	var property energia = 7
 
 	override method initialize() {
 		nombre = "aang"
 		movimiento = new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)
-		position = game.at(1, 5)
+		position = game.at(8, 5)
 		vida = 6
+
 	}
 
 	method saltar(){
@@ -169,6 +179,7 @@ object aang inherits Personaje {
 			self.perderEnergia(pelea.energiaAPerder())
 			pelea.direccion(movimiento.hit())
 			movimiento = pelea
+			self.atacar(self.enemigoAlLado())
 			game.onTick(100, "golpe", { animacion.dePersonaje(self, movimiento)})
 		}
 	}
@@ -185,7 +196,15 @@ object aang inherits Personaje {
 			//game.stop()
 			
 		}
-	
-	override method atacar(enemigo){}
+	method hayEnemigoAlLado(){
+		return nivel1.enemigos().any({enemy => enemy.alLadoDeAang()})
+	}
+	method enemigoAlLado(){
+		return nivel1.enemigos().filter({enemy=> self.hayEnemigoAlLado()})
+	}
+	override method atacar(enemigo){
+		if (self.hayEnemigoAlLado()){
+			enemigo.perderVida(2)
+		}
+	}
 }
-

@@ -10,6 +10,7 @@ import wollok.game.Position
 object nivel1 {
 	const board = new BoardGround(image="Stage/Background-Stage1.jpg")
 	const enemigardo = new Enemigo()
+	var property enemigos = #{enemigardo}
 	
 	method empezar(){
 		self.agregarVisuales()
@@ -45,8 +46,8 @@ object nivel1 {
 		//const enemigardo = new Enemigo()
 		game.addVisual(aang)
 		game.addVisual(enemigardo)
-		game.onTick(300, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
-		game.onCollideDo(enemigardo, {personaje => enemigardo.atacar(aang)})
+		//game.onTick(3000, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
+		//game.onCollideDo(enemigardo, {personaje => enemigardo.atacar(aang)})
 		game.onCollideDo(aang,{estalactita2 => estalactita2.atacar(aang)})
 		
 		//game.onTick(300, "caer", {aang.gravedad()})
