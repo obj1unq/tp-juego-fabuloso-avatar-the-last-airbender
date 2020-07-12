@@ -146,9 +146,11 @@ object aang inherits Personaje {
 		game.removeTickEvent("saltar")
 	}
 
+
 	method gravedad() {
 		if (self.puedeMover(abajo) and !self.abajoHayEscalera()) {
 			self.position(self.position().down(1))
+
 		}
 	}
 
@@ -166,8 +168,11 @@ object aang inherits Personaje {
 		}
 	}
 
+
 	method volverAlMovimientoAnterior() {
 		movimiento = movimientoAnterior
+
+
 	}
 
 	method aumentarVida() {

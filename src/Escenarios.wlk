@@ -99,12 +99,14 @@ class MovibleFluido {
 
 }
 
+
 class Estalactita inherits MovibleFluido {
 
 	var posicionInicial = game.at(0, 0)
 
 	method recordarPosicionInicial() {
 		posicionInicial = self.position()
+
 	}
 
 	method regenerar() {
@@ -124,6 +126,7 @@ class EstalactitaEsclava inherits Estalactita {
 	override method position() {
 		return estalactitaMaster.position().down(1)
 	}
+
 
 	override method fotograma() {
 		return if (estalactitaMaster.fotograma() < 6) 0 else estalactitaMaster.fotograma() * 10
