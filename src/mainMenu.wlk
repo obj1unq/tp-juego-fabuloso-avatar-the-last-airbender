@@ -53,12 +53,20 @@ object newGame {
 }
 
 object howTo {
-
+	const fondo = new BoardGround (image ="menu/comoJugar.png")
 	method image() = "menu/howTo.png"
 
 	method position() = game.at(6, 4)
 
 	method ejecutar() {
+	game.clear()
+	game.addVisual(fondo)
+	keyboard.backspace().onPressDo({
+		game.clear()
+		mainMenu.mostrar()
+	})
+	
+	
 	}
 
 }

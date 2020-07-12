@@ -1,128 +1,140 @@
 import wollok.game.*
 
-import characters.*
-import movements.*
-import animations.*
+
 
 class Floor {
 
-const property position
+	const property position
 
-method image(){
+	method image() {
+		return "Stage/Piso.png"
+	}
 
-	return "Stage/Piso.png"
-	
-}
-
-method esAtravesable(personaje){
-	return false
-
-} 
-
+	method esAtravesable(personaje) {
+		return false
+	}
+	method atacar(personaje){}
 
 }
 
 class FloatingFloor {
 
-const property position
-
-method image(){
-
-	return "Stage/Piso-Air.png"
-
-	
-}
-method esAtravesable(personaje){
-	return false //self.position().y() > personaje.position().y()
-} 
-}
-
-
-class Escalera{
-	
 	const property position
-	const images=["Stage/Escalera.png","Stage/Escalera-Base.png"]
+
+	method image() {
+		return "Stage/Piso-Air.png"
+	}
+
+	method esAtravesable(personaje) {
+		return false // self.position().y() > personaje.position().y()
+	}
+
+	method atacar(personaje) {
+	}
+
+}
+
+class Escalera {
+
+	const property position
+	const images = [ "Stage/Escalera.png", "Stage/Escalera-Base.png" ]
 	const indice = 0
-	
-	method image(){
+
+	method image() {
 		return images.get(indice)
 	}
-	method esAtravesable(personaje){
+
+	method esAtravesable(personaje) {
 		return true
 	}
+
+	method atacar(personaje) {
+	}
+
 }
 
-class BloqueVacio{
+class BloqueVacio {
+
 	const property position
-	
-	method image(){return"Stage/Muro.png"}
-	
-	method esAtravesable(personaje){
+
+	method image() {
+		return "Stage/Muro.png"
+	}
+
+	method esAtravesable(personaje) {
 		return false
 	}
+
+	method atacar(personaje) {
+	}
+
 }
 
-class MovibleFluido{
+class MovibleFluido {
+
 	var property fotograma = 1
-	
-	var property position = game.at(0,0)
-	
-	
-	method image(){
+	var property position = game.at(0, 0)
+
+	method image() {
 		return self.nombre() + "/" + self.fotograma() + ".png"
 	}
-	
-	method fotogramas(){
+
+	method fotogramas() {
 		return 10
 	}
-	
+
 	method nombre() // abstract
-	
-	method esAtravesable(personaje){
+
+	method esAtravesable(personaje) {
 		return true
 	}
-	
-	method avanzarAnimaciones(){
+
+	method avanzarAnimaciones() {
 		fotograma++
-		if(fotograma>self.fotogramas()){
+		if (fotograma > self.fotogramas()) {
 			position = self.position().down(1)
 			fotograma = 1
 		}
 	}
+
 }
 
-class Estalactita inherits MovibleFluido{
-	var posicionInicial = game.at(0,0)
-	const property danio = 1
-	
-	method recordarPosicionInicial(){
-		posicionInicial = self.position()	
+
+class Estalactita inherits MovibleFluido {
+
+	var posicionInicial = game.at(0, 0)
+
+	method recordarPosicionInicial() {
+		posicionInicial = self.position()
+
 	}
-	
-	method regenerar(){
+
+	method regenerar() {
 		self.position(posicionInicial)
 	}
-	
-	override method nombre(){
+
+	override method nombre() {
 		return "estalactita"
 	}
 
 }
 
-class EstalactitaEsclava inherits Estalactita{
-	
+class EstalactitaEsclava inherits Estalactita {
+
 	const estalactitaMaster
 
-    override method position(){
-    	return estalactitaMaster.position().down(1)
-    }
-	
-	override method fotograma(){
-		return if (estalactitaMaster.fotograma() < 6) 0 else estalactitaMaster.fotograma() * 10 
+	override method position() {
+		return estalactitaMaster.position().down(1)
 	}
-	method herir(personaje){
-		personaje.perderVida(danio)
-	}
-}
 
+
+	override method fotograma() {
+		return if (estalactitaMaster.fotograma() < 6) 0 else estalactitaMaster.fotograma() * 10
+	}
+
+	method atacar(personaje) {
+		personaje.perderVida(1)
+	}
+
+}
 

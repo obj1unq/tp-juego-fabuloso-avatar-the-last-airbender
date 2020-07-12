@@ -3,14 +3,13 @@ import juego.*
 import characters.*
 import movements.*
 import elements.*
-import animations.*
 import Escenarios.*
 import wollok.game.Position
 
 object nivel1 {
 	const board = new BoardGround(image="Stage/Background-Stage1.jpg")
-	
-	
+	const enemigardo = new Enemigo()
+	var property enemigos = #{enemigardo}
 	
 	method empezar(){
 		self.agregarVisuales()
@@ -20,15 +19,8 @@ object nivel1 {
 		//TODO: Buscarle lugar a las colisiones
 		game.onTick(1*500,"gravedad",{aang.gravedad()})
 		game.onTick(3*1000, "regeneracionMana",{ aang.aumentarEnergia()})
+		game.onTick(1*500,"gravedad",{aang.gravedad()})
 	}
-	
-	
-		
-		  
-		/*const awita = new Elemento(elemento="water")
-		game.onTick(130, "avanzarAang", {animacion.deElemento(awita)})
-		game.addVisualIn(awita, game.at(3,1))
-		game.onCollideDo(awita,{personaje =>personaje.guardar(awita)})*/
 	
 	
 	method agregarVisuales(){
@@ -53,9 +45,14 @@ object nivel1 {
 	
 		
 		game.addVisual(aang)
-		//game.onTick(300, "caer", {aang.gravedad()})
-		game.onCollideDo(aang,{estalactita => estalactita2.herir(aang)})
-		game.addVisual(aire)
+
+		game.addVisual(enemigardo)
+		game.onTick(300, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
+		game.onCollideDo(enemigardo, {personaje => enemigardo.atacar(aang)})
+		game.onCollideDo(aang,{estalactita2 => estalactita2.atacar(aang)})
+		
+		
+
 		game.addVisual(barraVida)
 		game.addVisual(barraMana)
 		game.addVisual(scoreUnidad)
@@ -112,13 +109,14 @@ object nivel1 {
 	}
 	
 	method configurarTeclado(){
-		keyboard.c().onPressDo({aang.figth(hitDerecha)})
+		
+		keyboard.c().onPressDo({aang.figth()})
 		keyboard.up().onPressDo({aang.mover(arribaEnEscalera)})
 		keyboard.space().onPressDo({aang.saltar()})
 		keyboard.down().onPressDo({aang.mover(abajoEnEscalera)})	
 		keyboard.right().onPressDo({aang.mover(derecha)})	
 		keyboard.left().onPressDo({aang.mover(izquierda)})
-	}
+		}
 	
 	
 }
