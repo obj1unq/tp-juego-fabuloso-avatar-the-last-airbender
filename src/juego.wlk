@@ -13,3 +13,9 @@ class BoardGround{
 	method image() = image
 	method position() = game.origin()
 }
+
+object animacion {
+
+	
+	method deElemento(elemento){elemento.avanzarAnimaciones()}
+}

@@ -23,36 +23,8 @@ class Elemento{
 }
 
 
-object aire {
-	method image() = "barras_elementos/aire.png"
-	method position()  {return game.at(1,10)} 
-
-}
 
 
-object agua {
-	method image() = "barras_elementos/agua.png"
-	method position()  {return game.at(2,10)} 
-	method aprendioADominarElAgua(){
-		game.addVisual(self)
-	}
-
-}
-object tierra {
-	method image() = "barras_elementos/tierra.png"
-	method position()  {return game.at(3,10)} 
-	method aprendioADominarLaTierra(){
-		game.addVisual(self)
-	}
-
-}
-object fuego {
-	method image() = "barras_elementos/fuego.png"
-	method position()  {return game.at(4,10)} 
-	method aprendioADominarElFuego(){
-		game.addVisual(self)
-	}
-}
 //////////////////////////////	
 //////BARRAS MANA Y VIDA//////
 //////////////////////////////

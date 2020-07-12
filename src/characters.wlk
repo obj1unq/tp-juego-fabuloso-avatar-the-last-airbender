@@ -1,10 +1,8 @@
 import wollok.game.*
-import animations.*
 import elements.*
 import movements.*
-import Escenarios.*
-import niveles.*
 import juego.*
+import niveles.*
 
 class Personaje {
 
@@ -28,6 +26,7 @@ class Personaje {
 			self.position(movimiento.siguientePosicion())
 		}
 	}
+
 	method perderVida(vidaAPerder) {
 		if (self.vida() > 0) {
 			vida -= vidaAPerder
@@ -37,25 +36,26 @@ class Personaje {
 		}
 	}
 
-
 	method esAtravesable(personaje) {
 		return false
 	}
 
 	method puedeMover(direccion)
+
 	method morir()
-	method atacar(personaje)
+
 }
 
 class Enemigo inherits Personaje {
+
 	const danio = 1
-	
+
 	override method initialize() {
 		movimiento = new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)
 		position = game.at(7, 5)
 		nombre = "enemy"
-		vida = 1
-		}
+		vida = 4
+	}
 
 	override method puedeMover(direccion) {
 		const direccionAEvaluar = game.getObjectsIn(direccion.posicion(self).down(1))
@@ -71,26 +71,40 @@ class Enemigo inherits Personaje {
 		movimiento.avanzarAnimaciones()
 		self.position(movimiento.siguientePosicion())
 	}
-		override method atacar(personaje){
-			personaje.perderVida(danio)
+
+	method atacar(personaje) {
+		personaje.perderVida(danio)
+	}
+
+	override method morir() {
+		game.removeVisual(self)
+	}
+
+	method alLadoDeAang() {
+		return self.aangALaDerecha() or self.aangALaIzquierda()
+	}
+
+	method aangALaDerecha() {
+		return self.position().right(1) == aang.position()
+	}
+
+	method aangALaIzquierda() {
+		return self.position().left(1) == aang.position()
+	}
+
+	override method perderVida(vidaAPerder) {
+		if (self.vida() > 0) {
+			vida -= vidaAPerder
+		} else {
+			self.morir()
 		}
-		override method morir(){
-			game.removeVisual(self)
-		}
-		method alLadoDeAang(){
-			return self.aangALaDerecha() or self.aangALaIzquierda()
-		}
-		method aangALaDerecha(){
-			return self.position().right(1) == aang.position()
-		}
-		method aangALaIzquierda(){
-			return self.position().left(1) == aang.position()
-		}
+	}
 
 }
 
 object aang inherits Personaje {
 
+	const ultimosMovimientos = []
 	const pelea = new Hit(direccion = hitDerecha, fotogramas = 5, personaje = self)
 	const salto = new Salto(direccion = saltoDesdeDerecha, fotogramas = 4, personaje = self)
 	var movimientoAnterior = null
@@ -99,27 +113,19 @@ object aang inherits Personaje {
 	override method initialize() {
 		nombre = "aang"
 		movimiento = new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)
-		position = game.at(8, 5)
+		position = game.at(1, 1)
 		vida = 6
-
 	}
 
-	method saltar(){
-		movimientoAnterior = movimiento
-		salto.direccion(movimiento.salto())
+	method saltar() {
+		ultimosMovimientos.add(movimiento)
+		salto.direccion(ultimosMovimientos.head().salto())
 		movimiento = salto
-	  	game.onTick(100, "salt", {animacion.dePersonaje(self, movimiento)})
-	  	self.position(self.position().up(1))
-	  	//game.onTick(500, "saltar", {self.caer()})
-	 }
-//	method saltar(){
-//		const direccionPreviaAlSalto = direccionActual 
-//		self.direccionActual(direccionActual.salto()) 
-//		game.onTick(10, "salto", {direccionActual.avanzarAnimaciones()})
-//		self.position(arriba.position())
-//		game.onTick(500, "saltar", {self.caer()})
-//		direccionActual = direccionPreviaAlSalto
-//	}
+		game.onTick(100, "salt", { animacion.deElemento(movimiento)})
+		self.position(self.position().up(1))
+		game.onTick(500, "saltar", { self.caer()})
+	}
+
 	method guardar(elemento) {
 		scoreUnidad.aumentar()
 		game.removeVisual(elemento)
@@ -134,11 +140,10 @@ object aang inherits Personaje {
 	}
 
 	method caer() {
-		self.volverAlMovimientoAnterior()
-		self.gravedad()
-		//game.removeTickEvent("saltar")
 		game.removeTickEvent("salt")
-		
+		movimiento = ultimosMovimientos.head()
+		self.gravedad()
+		game.removeTickEvent("saltar")
 	}
 
 	method gravedad() {
@@ -165,7 +170,6 @@ object aang inherits Personaje {
 		movimiento = movimientoAnterior
 	}
 
-
 	method aumentarVida() {
 		if (self.vida() < 6) {
 			vida += 1
@@ -179,32 +183,36 @@ object aang inherits Personaje {
 			self.perderEnergia(pelea.energiaAPerder())
 			pelea.direccion(movimiento.hit())
 			movimiento = pelea
-			//self.atacar(self.enemigoAlLado())
-			game.onTick(100, "golpe", { animacion.dePersonaje(self, movimiento)})
+			game.onTick(100, "golpe", { animacion.deElemento(movimiento)})
+			self.atacar()
 		}
 	}
-	
+
 	override method puedeMover(direccion) {
 		const objeto = game.getObjectsIn(direccion.posicion(self))
 		return (objeto.isEmpty() or objeto.head().esAtravesable(self)) and not movimiento.esDePelea()
 	}
-	override method morir(){
-		const boardMuerte = new BoardGround(image="aangMorido.png")
-			game.clear()
-			game.addVisual(boardMuerte)
-			//game.schedule(10*1000,game.addVisual(boardMuerte))
-			//game.stop()
-			
+
+	override method morir() {
+		const boardMuerte = new BoardGround(image = "boardgrounds/aangMorido.jpg")
+		game.clear()
+		game.addVisual(boardMuerte)
+	}
+
+	method hayEnemigoAlLado() {
+		return nivel1.enemigos().any({ enemy => enemy.alLadoDeAang() })
+	}
+
+	method enemigoAlLado() {
+		return nivel1.enemigos().find({ enemy => enemy.alLadoDeAang() })
+	}
+
+	method atacar() {
+		if (self.hayEnemigoAlLado()) {
+			self.enemigoAlLado().perderVida(2)
+		} else {
 		}
-	method hayEnemigoAlLado(){
-		return nivel1.enemigos().any({enemy => enemy.alLadoDeAang()})
 	}
-	method enemigoAlLado(){
-		return nivel1.enemigos().filter({enemy=> self.hayEnemigoAlLado()})
-	}
-	override method atacar(enemigo){
-		if (self.hayEnemigoAlLado()){
-			enemigo.perderVida(2)
-		}
-	}
+
 }
+

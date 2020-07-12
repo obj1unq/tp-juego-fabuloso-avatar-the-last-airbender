@@ -144,7 +144,7 @@ class Salto inherits Movimiento {
 		animacion++
 		if (animacion > fotogramas) {
 			animacion = 1
-			personaje.caer()
+			
 		}
 	}
 	
@@ -153,12 +153,12 @@ class Salto inherits Movimiento {
 object saltoDesdeDerecha {
 		
 		method nombre() = "jump/fromLeft"
-		method salto() = self
+		
 }
 
 object saltoDesdeIzquierda {
 	
 		method nombre() = "jump/fromRight"
-		method salto() = self
+		
 	
 }

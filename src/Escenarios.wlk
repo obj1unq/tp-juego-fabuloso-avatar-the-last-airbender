@@ -1,7 +1,6 @@
 import wollok.game.*
-import characters.*
-import movements.*
-import animations.*
+
+
 
 class Floor {
 
@@ -131,7 +130,7 @@ class EstalactitaEsclava inherits Estalactita {
 	}
 
 	method atacar(personaje) {
-		personaje.perderVida()
+		personaje.perderVida(1)
 	}
 
 }

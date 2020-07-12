@@ -3,7 +3,6 @@ import juego.*
 import characters.*
 import movements.*
 import elements.*
-import animations.*
 import Escenarios.*
 import wollok.game.Position
 
@@ -43,15 +42,14 @@ object nivel1 {
 		game.addVisual(estalactita2)
 		if(game.hasVisual(estalactita)){game.onTick(5, "avanzarEstalac", {animacion.deElemento(estalactita)})}
 		game.onCollideDo(estalactita, {otraCosa => estalactita.regenerar()})
-		//const enemigardo = new Enemigo()
+		
 		game.addVisual(aang)
 		game.addVisual(enemigardo)
-		game.onTick(3000, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
+		game.onTick(300, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
 		game.onCollideDo(enemigardo, {personaje => enemigardo.atacar(aang)})
 		game.onCollideDo(aang,{estalactita2 => estalactita2.atacar(aang)})
 		
-		//game.onTick(300, "caer", {aang.gravedad()})
-		game.addVisual(aire)
+		
 		game.addVisual(barraVida)
 		game.addVisual(barraMana)
 		game.addVisual(scoreUnidad)
