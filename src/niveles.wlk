@@ -10,8 +10,8 @@ object nivel1 {
 	
 	// <-- Instancia -->
 	const board = new BoardGround(image = "Stage/Background-Stage1.jpg")
-	const enemigardo = new Enemigo(position = game.at(7, 5), vida = 4, nombre = "enemy", movimiento = (new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)))
-	const enemigardo2 = new Enemigo(position = game.at(19, 1), vida = 4, nombre = "enemy", movimiento = (new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)))
+	const enemigardo = new Enemigo(position = game.at(7,5))
+	const enemigardo2 = new Enemigo(position = game.at(19,1))
 	const estalactita = new Estalactita(position = game.at(4, 4))
 	const estalactita2 = new EstalactitaEsclava(estalactitaMaster = estalactita)
 	// <--------------->

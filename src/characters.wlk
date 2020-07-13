@@ -6,10 +6,10 @@ import niveles.*
 
 class Personaje {
 
-	var property position
-	var nombre
-	var property movimiento
-	var property vida
+	var property position = null
+	var nombre = null
+	var property movimiento = null
+	var property vida = null
 
 	method image() {
 		return movimiento.image()
