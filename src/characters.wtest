@@ -1,6 +1,16 @@
 import wollok.game.*
 import characters.*
 import movements.*
+import niveles.*
+
+describe "Personajes"{
+	var enemigoTest
+	
+fixture{
+	enemigoTest = new Enemigo(position = game.at(2,1))
+	
+	nivel1.agregarEnemigo(enemigoTest)
+}
 test "Aang pierde energia" {
 	aang.energia(7)
 	aang.perderEnergia(3)
@@ -13,8 +23,8 @@ test "Aang aumenta energia"{
 	assert.that(aang.energia()==2)
 }
 test "Aang se mueve y cambia de posicion"{
-	const nuevaPosicion = aang.position().right(1)
-	aang.mover(derecha)
+	const nuevaPosicion = aang.position().left(1)
+	aang.mover(izquierda)
 	assert.equals(nuevaPosicion,aang.position())
 	
 }
@@ -25,11 +35,19 @@ test "Aang pelea y pierde energia"{
 }
 test "Aang pierde vida"{
 	aang.vida(6)
-	aang.perderVida(1)
+	aang.recibirDanio(1)
 	assert.that(aang.vida() == 5)
 }
 test "Aang aumenta su vida"{
 	aang.vida(1)
 	aang.aumentarVida()
 	assert.that(aang.vida() == 2)
+}
+test "hay enemigo al lado de Aang"{
+	assert.that(aang.hayEnemigoAlLado())
+}
+test "aang ataca enemigo"{
+	aang.atacar()
+	assert.equals(3,enemigoTest.vida())
+	}
 }

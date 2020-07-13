@@ -26,9 +26,11 @@ object mainMenu {
 		game.addVisual(board)
 		self.agregarItem(newGame)
 		self.agregarItem(howTo)
+		self.agregarItem(creditos)
 		self.validarSiHayObjetosEnElMenu()
 		game.addVisual(cursor)
 		self.configurarTeclado()
+		
 	}
 
 	method configurarTeclado() {
@@ -56,7 +58,7 @@ object howTo {
 	const fondo = new BoardGround (image ="menu/comoJugar.png")
 	method image() = "menu/howTo.png"
 
-	method position() = game.at(6, 4)
+	method position() = game.at(6, 5)
 
 	method ejecutar() {
 	game.clear()
@@ -111,4 +113,21 @@ object cursor {
 		return index != self.principioDelMenu() and mainMenu.contieneMenu()
 	}
 	
+}
+object creditos {
+
+	const fondo = new BoardGround(image = "menu/creditos.png")
+
+	method image() = "menu/credititos.png"
+
+	method position() = game.at(6, 3)
+
+	method ejecutar() {
+		game.clear()
+		game.addVisual(fondo)
+		keyboard.backspace().onPressDo({ game.clear()
+			mainMenu.mostrar()
+		})
+	}
+
 }

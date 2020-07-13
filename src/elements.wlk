@@ -1,122 +1,113 @@
 import wollok.game.*
 import characters.*
 
-////////////////////////////////////
-///////////ELEMENTOS////////////////
-////////////////////////////////////
+// <-- Elemento -->
 
-class Elemento{
+class Elemento {
+
 	const elemento
 	const fotogramas = 12
 	var animacion = 1
 	const property position
+
 	method image() = "elements/" + elemento + "/" + animacion + ".png"
-	method avanzarAnimaciones(){
+
+	method avanzarAnimaciones() {
 		animacion++
-		if(animacion>fotogramas){animacion=1}
-	}
-	method esAtravesable(personaje){
-	return true
-	} 
-	method atacar(personaje) {}
-
-}
-
-
-
-
-//////////////////////////////	
-//////BARRAS MANA Y VIDA//////
-//////////////////////////////
-
-
-object barraVida{
-	var property barraVida = 6
-	method position(){return game.at(1,8)}
-	method image()="vida/"+ barraVida.toString()+".png"
-	method descontarBarra(vidaAPerder){
-		if (barraVida == 0){game.stop()}
-		else {barraVida -=vidaAPerder}
-	}
-	method aumentarBarra(){barraVida += 1}
-	
-}
-object barraMana{
-	var property barraEnergia = 7
-	method position() {return game.at(1,8)}
-	method image() = "barraMana/"+ barraEnergia.toString()+".png"
-	method aumentarBarra(){barraEnergia += 1}
-	method descontarBarra(energiaAPerder){
-		  barraEnergia -= energiaAPerder
-	}
-	
-}
-
-
-///////////////////////////
-//////S C O R E////////////
-///////////////////////////
-
-
-object scoreUnidad{
-	
-	var score = 0
-	
-	method position(){
-		return game.at(19,9)
-	}
-	method image() {
-		return "score/unidad/"+ score + ".png"
-	}
-	
-	method aumentar(){
-		score++
-		if (score > 9){
-			scoreDecena.aumentar()
-			score = 0
+		if (animacion > fotogramas) {
+			animacion = 1
 		}
 	}
 
+	method esAtravesable(personaje) {
+		return true
+	}
+
+	method atacar(personaje) {
+	}
+
 }
 
-object scoreDecena{
-	
+// <-- Barras de vida y maná -->
+
+class Barra {
+
+	const property personaje
+
+	method position() = game.at(1, 8)
+
+	method image() = "vida/" + personaje.nombre() + "/" + personaje.vida() + ".png"
+
+	method guardar(elemento) {
+	}
+
+	method atacar(_personaje) {
+	}
+
+}
+
+class BarraMovil inherits Barra {
+
+	override method position() = personaje.position()
+
+}
+
+class Mana inherits Barra {
+
+	override method image() = "barraMana/" + personaje.energia() + ".png"
+
+}
+
+// <-- Score -->
+
+class Score {
+
 	var score = 0
-	
-	method position(){
-		return game.at(18,9)
-	}
+
 	method image() {
-		return "score/decena/"+ score + ".png"
+		return "score/" + self.nombre() + "/" + score + ".png"
 	}
-	
-	method aumentar(){
+
+	method aumentar() {
 		score++
-		if (score > 9){
-			scoreCentena.aumentar()
-			score = 0
+		if (score > 9) {
+			self.siguiente().aumentar()
 		}
 	}
 
-}
+	method nombre()
 
-object scoreCentena{
-	
-	var score = 0
-	
-	method position(){
-		return game.at(17,9)
-	}
-	method image() {
-		return "score/centena/"+ score + ".png"
-	}
-	
-	method aumentar(){
-		score++
-		if (score > 9){
-			scoreUnidad.aumentar()
-			score = 0
-		}
-	}
+	method siguiente()
 
 }
+
+object scoreUnidad inherits Score {
+
+	method position() = game.at(19, 9)
+
+	override method nombre() = "unidad"
+
+	override method siguiente() = scoreDecena
+
+}
+
+object scoreDecena inherits Score {
+
+	method position() = game.at(18,9)
+
+	override method nombre() = "decena"
+
+	override method siguiente() = scoreCentena
+
+}
+
+object scoreCentena inherits Score {
+
+	method position() = game.at(17, 9)
+
+	override method nombre() = "centena"
+
+	override method siguiente() = scoreUnidad
+
+}
+
