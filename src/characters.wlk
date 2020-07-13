@@ -6,17 +6,18 @@ import niveles.*
 
 class Personaje {
 
-	var property position
-	var nombre
-	var property movimiento
-	var property vida
+	var property position = null
+	var nombre = null
+	var property movimiento = null
+	var property vida = null
 
 	method image() {
 		return movimiento.image()
 	}
-	
-	method guardar(elemento){}
-	
+
+	method guardar(elemento) {
+	}
+
 	method nombre() {
 		return nombre
 	}
@@ -51,8 +52,7 @@ class Personaje {
 class Enemigo inherits Personaje {
 
 	const danio = 1
-	
-	 
+
 	override method initialize() {
 		movimiento = new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)
 		nombre = "enemy"
@@ -104,6 +104,7 @@ class Enemigo inherits Personaje {
 
 }
 
+
 object aang inherits Personaje {
 
 	const ultimosMovimientos = []
@@ -148,11 +149,9 @@ object aang inherits Personaje {
 		game.removeTickEvent("saltar")
 	}
 
-
 	method gravedad() {
 		if (self.puedeMover(abajo) and !self.abajoHayEscalera()) {
 			self.position(self.position().down(1))
-
 		}
 	}
 
@@ -170,11 +169,8 @@ object aang inherits Personaje {
 		}
 	}
 
-
 	method volverAlMovimientoAnterior() {
 		movimiento = movimientoAnterior
-
-
 	}
 
 	method aumentarVida() {

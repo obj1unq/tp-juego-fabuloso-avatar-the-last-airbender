@@ -8,8 +8,8 @@ import wollok.game.Position
 
 object nivel1 {
 	const board = new BoardGround(image="Stage/Background-Stage1.jpg")
-	const enemigardo = new Enemigo(position = game.at(7,5), vida = 4, nombre = "enemy", movimiento =  (new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)))
-	const enemigardo2 = new Enemigo(position = game.at(19,1), vida = 4, nombre = "enemy", movimiento =  (new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)))
+	const enemigardo = new Enemigo(position = game.at(7,5))
+	const enemigardo2 = new Enemigo(position = game.at(19,1))
 	var property enemigos = #{enemigardo,enemigardo2}
 	
 	method empezar(){
