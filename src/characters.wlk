@@ -14,7 +14,9 @@ class Personaje {
 	method image() {
 		return movimiento.image()
 	}
-
+	
+	method guardar(elemento){}
+	
 	method nombre() {
 		return nombre
 	}
@@ -30,7 +32,7 @@ class Personaje {
 	method perderVida(vidaAPerder) {
 		if (self.vida() > 0) {
 			vida -= vidaAPerder
-			barraVida.descontarBarra()
+			barraVida.descontarBarra(vidaAPerder)
 		} else {
 			self.morir()
 		}
@@ -49,10 +51,10 @@ class Personaje {
 class Enemigo inherits Personaje {
 
 	const danio = 1
-
+	
+	 
 	override method initialize() {
 		movimiento = new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)
-		position = game.at(7, 5)
 		nombre = "enemy"
 		vida = 4
 	}
@@ -126,7 +128,7 @@ object aang inherits Personaje {
 		game.onTick(500, "saltar", { self.caer()})
 	}
 
-	method guardar(elemento) {
+	override method guardar(elemento) {
 		scoreUnidad.aumentar()
 		game.removeVisual(elemento)
 	}

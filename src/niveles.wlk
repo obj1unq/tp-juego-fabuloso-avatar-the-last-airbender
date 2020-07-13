@@ -8,8 +8,9 @@ import wollok.game.Position
 
 object nivel1 {
 	const board = new BoardGround(image="Stage/Background-Stage1.jpg")
-	const enemigardo = new Enemigo()
-	var property enemigos = #{enemigardo}
+	const enemigardo = new Enemigo(position = game.at(7,5), vida = 4, nombre = "enemy", movimiento =  (new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)))
+	const enemigardo2 = new Enemigo(position = game.at(19,1), vida = 4, nombre = "enemy", movimiento =  (new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)))
+	var property enemigos = #{enemigardo,enemigardo2}
 	
 	method empezar(){
 		self.agregarVisuales()
@@ -20,6 +21,7 @@ object nivel1 {
 		game.onTick(1*500,"gravedad",{aang.gravedad()})
 		game.onTick(3*1000, "regeneracionMana",{ aang.aumentarEnergia()})
 		game.onTick(1*500,"gravedad",{aang.gravedad()})
+		
 	}
 	
 	
@@ -47,9 +49,11 @@ object nivel1 {
 		game.addVisual(aang)
 
 		game.addVisual(enemigardo)
-		game.onTick(300, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())})
-		game.onCollideDo(enemigardo, {personaje => enemigardo.atacar(aang)})
-		game.onCollideDo(aang,{estalactita2 => estalactita2.atacar(aang)})
+		game.addVisual(enemigardo2)
+		game.onTick(300, "enemigo", {enemigardo.mover(enemigardo.movimiento().direccion())
+									 enemigardo2.mover(enemigardo2.movimiento().direccion())
+		})
+		game.onCollideDo(aang,{personaje => personaje.atacar(aang)})
 		
 		
 
@@ -123,7 +127,7 @@ object nivel1 {
 
 object elementos {
 	
-	const elementos = [game.at(1,3),game.at(2,3),game.at(5,8),game.at(7,3)]  
+	const elementos = [game.at(1,3),game.at(11,1),game.at(8,5),game.at(19,1),game.at(17,5)]  
 	
 	method agregarElemento(elemento){
 			game.addVisual(elemento)
