@@ -25,7 +25,7 @@ test "Aang pelea y pierde energia"{
 }
 test "Aang pierde vida"{
 	aang.vida(6)
-	aang.perderVida(1)
+	aang.recibirDanio(1)
 	assert.that(aang.vida() == 5)
 }
 test "Aang aumenta su vida"{

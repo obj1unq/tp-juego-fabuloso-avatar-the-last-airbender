@@ -14,9 +14,10 @@ class Personaje {
 	method image() {
 		return movimiento.image()
 	}
-	
-	method guardar(elemento){}
-	
+
+	method guardar(elemento) {
+	}
+
 	method nombre() {
 		return nombre
 	}
@@ -29,10 +30,9 @@ class Personaje {
 		}
 	}
 
-	method perderVida(vidaAPerder) {
-		if (self.vida() > 0) {
-			vida -= vidaAPerder
-			barraVida.descontarBarra(vidaAPerder)
+	method recibirDanio(danio) {
+		if (self.vida() > 1) {
+			vida -= danio
 		} else {
 			self.morir()
 		}
@@ -50,9 +50,9 @@ class Personaje {
 
 class Enemigo inherits Personaje {
 
+	const property barraDeVida = new BarraMovil(personaje = self)
 	const danio = 1
-	
-	 
+
 	override method initialize() {
 		movimiento = new Movimiento(direccion = derecha, fotogramas = 4, personaje = self)
 		nombre = "enemy"
@@ -75,11 +75,11 @@ class Enemigo inherits Personaje {
 	}
 
 	method atacar(personaje) {
-		personaje.perderVida(danio)
+		personaje.recibirDanio(danio)
 	}
 
 	override method morir() {
-		game.removeVisual(self)
+		nivel1.eliminarEnemigo(self) // game.removeVisual(self)
 	}
 
 	method alLadoDeAang() {
@@ -92,14 +92,6 @@ class Enemigo inherits Personaje {
 
 	method aangALaIzquierda() {
 		return self.position().left(1) == aang.position()
-	}
-
-	override method perderVida(vidaAPerder) {
-		if (self.vida() > 0) {
-			vida -= vidaAPerder
-		} else {
-			self.morir()
-		}
 	}
 
 }
@@ -148,39 +140,31 @@ object aang inherits Personaje {
 		game.removeTickEvent("saltar")
 	}
 
-
 	method gravedad() {
 		if (self.puedeMover(abajo) and !self.abajoHayEscalera()) {
 			self.position(self.position().down(1))
-
 		}
 	}
 
 	method perderEnergia(energiaAPerder) {
 		if (self.energia() > 0) {
 			energia -= energiaAPerder
-			barraMana.descontarBarra(energiaAPerder)
 		}
 	}
 
 	method aumentarEnergia() {
 		if (self.energia() < 7) {
 			energia += 1
-			barraMana.aumentarBarra()
 		}
 	}
 
-
 	method volverAlMovimientoAnterior() {
 		movimiento = movimientoAnterior
-
-
 	}
 
 	method aumentarVida() {
 		if (self.vida() < 6) {
-			vida += 1
-			barraVida.aumentarBarra()
+			vida++
 		}
 	}
 
@@ -204,6 +188,8 @@ object aang inherits Personaje {
 		const boardMuerte = new BoardGround(image = "boardgrounds/aangMorido.jpg")
 		game.clear()
 		game.addVisual(boardMuerte)
+						  
+		
 	}
 
 	method hayEnemigoAlLado() {
@@ -216,7 +202,7 @@ object aang inherits Personaje {
 
 	method atacar() {
 		if (self.hayEnemigoAlLado()) {
-			self.enemigoAlLado().perderVida(2)
+			self.enemigoAlLado().recibirDanio(1)
 		} else {
 		}
 	}

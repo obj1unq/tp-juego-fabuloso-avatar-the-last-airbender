@@ -15,17 +15,7 @@ test "La barra de Mana sube si la energia de aang sube" {
 	assert.equals(barraMana.barraEnergia(), 2)
 
 }
-test "La barra de vida baja si aang pierde vida"{
-	aang.vida(6)
-	aang.perderVida(1)
-	assert.that(barraVida.barraVida() ==5)
-}
-test "La barra de vida sube si aang gana vida"{
-	barraVida.barraVida(1)
-	aang.vida(1)
-	aang.aumentarVida()
-	assert.equals(barraVida.barraVida(), 2)
-}
+
 ///////////////////////////////////////////
 ///////////// S C O R E///////////////////
 /////////////////////////////////////////
